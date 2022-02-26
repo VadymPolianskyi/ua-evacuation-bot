@@ -68,7 +68,8 @@ class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral, FindG
 
             announcements: str = "\n" + "\n\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
 
-            final_message = msg.FIND_TRIP_RESULT.format(city_from, print_city_to, announcements)
+            final_message = msg.FIND_TRIP_RESULT.format(city_from, print_city_to, announcements) \
+                .replace('_', '\_')
 
             if len(final_message) > limits.FIND_RESPONSE_LIMIT:
                 f = file_service.create_text_file(final_message, AnnouncementServiceType.trip.value, message.user_id)

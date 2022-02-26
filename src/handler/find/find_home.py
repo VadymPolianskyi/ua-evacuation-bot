@@ -46,6 +46,7 @@ class FindHomeCityAnswerHandler(TelegramMessageHandler, FindHomeGeneral, FindGen
             announcements: str = "\n" + "\n\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
 
             final_message = msg.FIND_HOME_RESULT.format(city, announcements)
+            print(f"Final message: {final_message}")
 
             if len(final_message) > limits.FIND_RESPONSE_LIMIT:
                 f = file_service.create_text_file(final_message, AnnouncementServiceType.home.value, message.user_id)

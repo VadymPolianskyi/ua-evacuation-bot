@@ -7,10 +7,13 @@ INFO = """
 
 Житло 🏠
 - https://prykhystok.in.ua/
+- https://www.facebook.com/groups/347615063908402/?ref=share  (Молдова)
+
 
 Транспорт/Виїзд 🚗
 - https://www.ukrainenow.org/refuge
 - https://docs.google.com/document/d/1CaN8TjVelx2uLrlTQbkVNnOb6IWzOdLO\_Aqmps0hS-U/mobilebasic
+- https://in-poland.com/vezd-v-polshu-iz-ukrainy-aktualnaya-informatsiya/
 
 Пам'ятайте, ПОЇЗДИ зараз функціонують БЕЗКОШТОВНО! 🚊
 

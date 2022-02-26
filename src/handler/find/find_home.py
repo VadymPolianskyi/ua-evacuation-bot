@@ -43,7 +43,7 @@ class FindHomeCityAnswerHandler(TelegramMessageHandler, FindHomeGeneral, FindGen
         if cities.validate(city):
             res = self.announcement_service.find_by_city(city, AnnouncementType.share, AnnouncementServiceType.home)
 
-            announcements: str = "\n" + "\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
+            announcements: str = "\n" + "\n\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
 
             final_message = msg.FIND_HOME_RESULT.format(city, announcements)
 

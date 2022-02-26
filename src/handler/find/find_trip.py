@@ -66,7 +66,7 @@ class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral, FindG
             res = self.announcement_service.find_by_city(
                 city_from, AnnouncementType.share, AnnouncementServiceType.trip, city_to)
 
-            announcements: str = "\n" + "\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
+            announcements: str = "\n" + "\n\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
 
             final_message = msg.FIND_TRIP_RESULT.format(city_from, print_city_to, announcements)
 

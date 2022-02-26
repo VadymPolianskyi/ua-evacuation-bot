@@ -1,5 +1,5 @@
 from aiogram import Dispatcher
-from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
+from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 from src.config import marker, msg, limits
 from src.db.entity import AnnouncementType, AnnouncementServiceType
@@ -72,10 +72,10 @@ class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral, FindG
 
             if len(final_message) > limits.FIND_RESPONSE_LIMIT:
                 f = file_service.create_text_file(final_message, AnnouncementServiceType.trip.value, message.user_id)
-                await message.original.answer_document(f)
+                await message.original.answer_document(f, reply_markup=ReplyKeyboardRemove())
                 file_service.close(f)
             else:
-                await message.original.answer(final_message)
+                await message.original.answer(final_message, reply_markup=ReplyKeyboardRemove())
 
             await Dispatcher.get_current().current_state().finish()
             await self._show_find_menu(message.original)

@@ -1,4 +1,4 @@
-import asyncio
+# import asyncio
 
 from aiogram import Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -155,14 +155,15 @@ async def on_shutdown(dp):
 
 
 if __name__ == "__main__":
-    # executor.start_webhook(
-    #     dispatcher=dp,
-    #     webhook_path='/' + config.BOT_API_KEY,
-    #     on_startup=on_startup,
-    #     on_shutdown=on_shutdown,
-    #     skip_updates=True,
-    #     host=config.SERVER_HOST,
-    #     port=config.SERVER_PORT,
-    # )
     print("Lanuch")
-    asyncio.run(executor.start_polling(dispatcher=dp))
+
+    executor.start_webhook(
+        dispatcher=dp,
+        webhook_path='/' + config.BOT_API_TOKEN,
+        on_startup=on_startup,
+        on_shutdown=on_shutdown,
+        skip_updates=True,
+        host=config.SERVER_HOST,
+        port=config.SERVER_PORT,
+    )
+    # asyncio.run(executor.start_polling(dispatcher=dp))

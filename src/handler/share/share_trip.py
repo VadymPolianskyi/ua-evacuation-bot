@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from aiogram import Dispatcher
-from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
+from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 from src.config import marker, msg
 from src.config.limits import INFO_SYMBOLS_LIMIT
@@ -67,7 +67,7 @@ class ShareTripCityToAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
         city_to = message.text
 
         if cities.validate(city_to) or city_to in cities.any():
-            await message.original.answer(msg.SHARE_TRIP_SCHEDULING)
+            await message.original.answer(msg.SHARE_TRIP_SCHEDULING, reply_markup=ReplyKeyboardRemove())
             await ShareTripState.waiting_for_scheduling.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from, city_to=city_to)
         else:

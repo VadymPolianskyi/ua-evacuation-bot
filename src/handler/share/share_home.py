@@ -1,5 +1,5 @@
 from aiogram import Dispatcher
-from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
+from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 from src.config import marker, msg
 from src.config.limits import INFO_SYMBOLS_LIMIT
@@ -42,7 +42,7 @@ class ShareHomePostCityAnswerHandler(TelegramMessageHandler, ShareHomeGeneral):
 
         if cities.validate(city):
 
-            await message.original.answer(msg.SHARE_HOME_INFO)
+            await message.original.answer(msg.SHARE_HOME_INFO, reply_markup=ReplyKeyboardRemove())
             await ShareHomeState.waiting_for_info.set()
             await Dispatcher.get_current().current_state().update_data(city=city)
         else:

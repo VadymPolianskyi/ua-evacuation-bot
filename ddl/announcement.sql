@@ -1,11 +1,12 @@
-CREATE TABLE `alesha`.`evacuation_announcement` (
-  `id` VARCHAR(64) NOT NULL,
-  `user_id` INT NOT NULL,
-  `a_type` VARCHAR(45) NOT NULL,
-  `a_service` VARCHAR(45) NOT NULL,
-  `city_a` VARCHAR(64) NOT NULL,
-  `city_b` VARCHAR(64) NULL,
-  `info` VARCHAR(500) NULL,
-  `scheduled` TIMESTAMP NULL,
-  `created` TIMESTAMP NOT NULL DEFAULT CURRENT,
-  PRIMARY KEY (`id`));
+CREATE TABLE "evacuation_announcement" (
+  "id" varchar(64) NOT NULL,
+  "user_id" int NOT NULL,
+  "a_type" varchar(45) NOT NULL,
+  "a_service" varchar(45) NOT NULL,
+  "city_a" varchar(64) NOT NULL,
+  "city_b" varchar(64) DEFAULT NULL,
+  "info" text,
+  "scheduled" timestamp NULL DEFAULT NULL,
+  "created" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY ("id")
+)

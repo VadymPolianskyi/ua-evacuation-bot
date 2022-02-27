@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 
+from src.config import msg
 from src.db.entity import AnnouncementType, AnnouncementServiceType, City, AnnouncementEntity
 
 
@@ -38,7 +39,7 @@ class Announcement:
             if self.a_service == AnnouncementServiceType.home:
                 return f"Житло 🏠 `{self.city_from.name}`\nІнформація: {self.info}"
             else:
-                time = self.scheduled.strftime("%Y-%m-%d, %H:%M")
+                time = self.scheduled.strftime("%Y-%m-%d, %H:%M") if self.scheduled else msg.REGULAR
                 return f"Транспорт 🚗 `{self.city_from.name}` - `{self.city_to.name}`\n" \
                        f"Час: {time}\nІнформація: {self.info}"
 

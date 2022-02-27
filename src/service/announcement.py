@@ -48,14 +48,15 @@ class AnnouncementService:
                      city_to_id=None):
         result = [self.__to_model(ae) for ae in self.dao.find_by_city(city_from_id) if
                   self.__is_needed_trip_announcement(ae, a_type, a_service, city_to_id)]
-        print(f"Found {len(result)} AnnouncementsEntity(a_type={a_type}, city_from_id={city_from_id})")
+        print(f"Found {len(result)} Announcements(a_type={a_type},city_from_id={city_from_id},city_to_id={city_to_id})")
         return result
 
     def __is_needed_trip_announcement(self, a: AnnouncementEntity, a_type, a_service, city_to_id: int) -> bool:
         result = a.a_type == a_type
         result = result and a.a_service == a_service
-        result = result and (city_to_id is None or a.city_to_id == city_to_id or a.city_to_id == self.cities.ANY_ID)
-        if result and a.a_service == AnnouncementServiceType.trip and a.a_type == AnnouncementType.share:
+        result = result and (city_to_id is None or a.city_to_id == city_to_id
+                             or a.city_to_id == self.cities.ANY_ID or city_to_id == self.cities.ANY_ID)
+        if result and a.scheduled:
             result = result + time_service.validate(a.scheduled)
         return result
 

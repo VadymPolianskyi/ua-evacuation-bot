@@ -19,7 +19,8 @@ from src.handler.share.share import ShareCallbackHandler
 from src.handler.share.share_home import ShareHomeCallbackHandler, ShareHomePostInfoAnswerHandler
 from src.handler.share.share_home import ShareHomePostCityAnswerHandler
 from src.handler.share.share_trip import ShareTripCallbackHandler, ShareTripCityToAnswerHandler, \
-    ShareTripCityFromAnswerHandler, ShareTripSchedulingAnswerHandler, ShareTripInfoAnswerHandler
+    ShareTripCityFromAnswerHandler, ShareTripSchedulingAnswerHandler, ShareTripInfoAnswerHandler, \
+    ShareTripSchedulingAnswerCallbackHandler
 from src.handler.state import ShareHomeState, ShareTripState, FindHomeState, FindTripState
 from src.service.announcement import AnnouncementService
 #### TG BOT ####
@@ -42,6 +43,7 @@ callback_router = CallbackRouter([
 
     ShareHomeCallbackHandler(city_service),
     ShareTripCallbackHandler(city_service),
+    ShareTripSchedulingAnswerCallbackHandler(),
 
     FindHomeCallbackHandler(city_service),
     FindTripCallbackHandler(city_service),

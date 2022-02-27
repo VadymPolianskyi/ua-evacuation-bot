@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from aiogram import Dispatcher
-from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
 
 from src.config import marker, msg
 from src.config.limits import INFO_SYMBOLS_LIMIT
@@ -10,7 +10,7 @@ from src.db.entity import AnnouncementType, AnnouncementServiceType, City
 from src.handler.general import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
 from src.handler.share.share import ShareGeneral
 from src.handler.state import ShareTripState
-from src.service import time_service
+from src.service import time_service, markup
 from src.service.announcement import AnnouncementService
 from src.service.city import CityService
 
@@ -75,7 +75,9 @@ class ShareTripCityToAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
         city_to: City = self.city_service.find_by_name(city_to_name)
 
         if city_to:
-            await message.original.answer(msg.SHARE_TRIP_SCHEDULING, reply_markup=ReplyKeyboardRemove())
+            keyboard = markup.create_inline_markup_([(msg.SHARE_TRIP_REGULAR_BUTTON, marker.SHARE_TRIP_REGULAR, '_')])
+
+            await message.original.answer(msg.SHARE_TRIP_SCHEDULING, reply_markup=keyboard)
             await ShareTripState.waiting_for_scheduling.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from, city_to=city_to)
         else:
@@ -84,6 +86,23 @@ class ShareTripCityToAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
                                     with_any=True)
             await ShareTripState.waiting_for_city_to.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from)
+
+
+# scheduling callback
+class ShareTripSchedulingAnswerCallbackHandler(TelegramCallbackHandler):
+    MARKER = marker.SHARE_TRIP_REGULAR
+
+    def __init__(self):
+        TelegramCallbackHandler.__init__(self)
+
+    async def handle_(self, callback: CallbackMeta):
+        state_data: dict = await Dispatcher.get_current().current_state().get_data()
+        city_from: City = state_data['city_from']
+        city_to: City = state_data['city_to']
+
+        await callback.original.message.answer(msg.SHARE_TRIP_INFO)
+        await ShareTripState.waiting_for_info.set()
+        await Dispatcher.get_current().current_state().update_data(city_from=city_from, city_to=city_to)
 
 
 # scheduling
@@ -106,7 +125,9 @@ class ShareTripSchedulingAnswerHandler(TelegramMessageHandler, ShareTripGeneral)
             await Dispatcher.get_current().current_state().update_data(city_from=city_from, city_to=city_to,
                                                                        scheduling=extracted_schedule)
         else:
-            await self._show_cities(message.original, msg.SHARE_TRIP_SCHEDULING)
+            keyboard = markup.create_inline_markup_([(msg.SHARE_TRIP_REGULAR_BUTTON, marker.SHARE_TRIP_REGULAR, '_')])
+
+            await message.original.answer(msg.SHARE_TRIP_SCHEDULING, reply_markup=keyboard)
             await ShareTripState.waiting_for_scheduling.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from, city_to=city_to)
 
@@ -120,7 +141,7 @@ class ShareTripInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
         state_data: dict = await Dispatcher.get_current().current_state().get_data()
         city_from: City = state_data['city_from']
         city_to: City = state_data['city_to']
-        scheduling: datetime = state_data['scheduling']
+        scheduled: datetime = state_data['scheduling'] if 'scheduling' in state_data.keys() else None
 
         info = message.text
 
@@ -132,9 +153,9 @@ class ShareTripInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
                 city_from_id=city_from.id,
                 city_to_id=city_to.id,
                 info=info,
-                scheduled=scheduling)
+                scheduled=scheduled)
 
-            await message.original.answer(msg.SHARE_TRIP_DONE.format(city_from.name, city_to.name, info, scheduling))
+            await message.original.answer(msg.SHARE_TRIP_DONE.format(city_from.name, city_to.name))
             await Dispatcher.get_current().current_state().finish()
             await self._alert_if_match(message.original, a)
             await self._show_share_menu(message.original)
@@ -144,4 +165,4 @@ class ShareTripInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
             await message.original.answer(SHARE_INFO_WARNING.format(diff) + "\n" + msg.SHARE_TRIP_INFO)
             await ShareTripState.waiting_for_info.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from, city_to=city_to,
-                                                                       scheduling=scheduling)
+                                                                       scheduling=scheduled)

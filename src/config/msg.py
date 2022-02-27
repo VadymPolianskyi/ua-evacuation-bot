@@ -8,6 +8,7 @@ INFO_BUTTON = "Корисна інформація 📃"
 
 SHARE_HOME_BUTTON = "Житло 🏠"
 SHARE_TRIP_BUTTON = "Транспорт 🚗"
+SHARE_TRIP_REGULAR_BUTTON = "Регулярний 🕓"
 
 FIND_CREATE_BUTTON = "Залишити заявку 🔔"
 FIND_HOME_BUTTON = "Житло 🏠"
@@ -175,3 +176,5 @@ ERROR_BASIC = "Упс, щось пішло не так, вибачте."
 
 ANY_CITY_CHOICE = ["Неважливо"]
 DELETE_SIGN = '❌'
+
+REGULAR = "Регулярний 🕓"

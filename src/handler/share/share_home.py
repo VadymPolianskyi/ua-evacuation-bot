@@ -3,17 +3,21 @@ from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKey
 
 from src.config import marker, msg
 from src.config.limits import INFO_SYMBOLS_LIMIT
-from src.db.entity import AnnouncementType, AnnouncementServiceType
+from src.db.entity import AnnouncementType, AnnouncementServiceType, City
 from src.handler.general import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
 from src.handler.share.share import ShareGeneral
 from src.handler.state import ShareHomeState
-from src.service import cities
 from src.service.announcement import AnnouncementService
+from src.service.city import CityService
 
 
 class ShareHomeGeneral:
+
+    def __init__(self, city_service: CityService):
+        self.city_service = city_service
+
     async def _show_cities(self, message: Message):
-        cities_buttons = [[KeyboardButton(tz)] for tz in cities.all()]
+        cities_buttons = [[KeyboardButton(tz)] for tz in self.city_service.find_all_titles()]
 
         await message.answer(
             msg.SHARE_HOME_CITY,
@@ -24,23 +28,24 @@ class ShareHomeGeneral:
 class ShareHomeCallbackHandler(TelegramCallbackHandler, ShareHomeGeneral):
     MARKER = marker.SHARE_HOME
 
-    def __init__(self):
+    def __init__(self, city_service: CityService):
         TelegramCallbackHandler.__init__(self)
-        ShareHomeGeneral.__init__(self)
+        ShareHomeGeneral.__init__(self, city_service)
 
     async def handle_(self, callback: CallbackMeta):
         await self._show_cities(callback.original.message)
 
 
 class ShareHomePostCityAnswerHandler(TelegramMessageHandler, ShareHomeGeneral):
-    def __init__(self, ):
+    def __init__(self, city_service: CityService):
         TelegramMessageHandler.__init__(self)
-        ShareHomeGeneral.__init__(self)
+        ShareHomeGeneral.__init__(self, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
-        city = message.text
+        city_name = message.text
+        city: City = self.city_service.find_by_name(city_name)
 
-        if cities.validate(city):
+        if city:
 
             await message.original.answer(msg.SHARE_HOME_INFO, reply_markup=ReplyKeyboardRemove())
             await ShareHomeState.waiting_for_info.set()
@@ -50,21 +55,25 @@ class ShareHomePostCityAnswerHandler(TelegramMessageHandler, ShareHomeGeneral):
 
 
 class ShareHomePostInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
-    def __init__(self, announcement_service: AnnouncementService):
+    def __init__(self, announcement_service: AnnouncementService, city_service: CityService):
         TelegramMessageHandler.__init__(self)
-        ShareGeneral.__init__(self, announcement_service)
+        ShareGeneral.__init__(self, announcement_service, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
         info = message.text
-        city = (await Dispatcher.get_current().current_state().get_data())['city']
+        city: City = (await Dispatcher.get_current().current_state().get_data())['city']
 
         if len(info) <= INFO_SYMBOLS_LIMIT:
-            a = self.announcement_service.create_home(message.user_id, AnnouncementType.share,
-                                                      AnnouncementServiceType.home, city, info)
+            ae = self.announcement_service.create(
+                user_id=message.user_id,
+                a_type=AnnouncementType.share,
+                a_service=AnnouncementServiceType.home,
+                city_from_id=city.id,
+                info=info)
 
-            await message.original.answer(msg.SHARE_HOME_DONE.format(city, info))
+            await message.original.answer(msg.SHARE_HOME_DONE.format(city.name, info))
             await Dispatcher.get_current().current_state().finish()
-            await self._alert_if_match(message.original, a)
+            await self._alert_if_match(message.original, ae)
             await self._show_share_menu(message.original)
         else:
             diff = len(info) - INFO_SYMBOLS_LIMIT

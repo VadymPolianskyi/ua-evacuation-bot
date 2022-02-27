@@ -29,15 +29,32 @@ MENU = """
 INFO = """
 ❗Корисні ресурси:
 
+- [Агрегована iнвофмацiя](https://docs.google.com/document/d/1ZCxrK4520gSGiGy4Cvqbzzn6TkB02j85XlGc5J5cFrQ/mobilebasic?fbclid=IwAR2H3kUQvBVGuXwi1EimKQu3zfu4s8mO8smhU5PozgKrtG-GC48bjCtgYCc#h.x9logjleyhsb)
+
 Житло 🏠
 - https://prykhystok.in.ua/
 - https://www.facebook.com/groups/347615063908402/?ref=share  (Молдова)
+- https://www.gov.pl/web/udsc/ukraina---ua (Польща)
+- https://t.me/winwin_realty
+- https://docs.google.com/forms/d/e/1FAIpQLSerQV8PufaIagMPTZ36mlNeVGOzElh_G-sXOAmNvZQUUXS9GQ/viewform
+- [Житло  на Західній для біженців](https://t.me/+mteSsw5p5K9jOWEy)
+- [Пошук житла на Заході](https://t.me/help_find_house)
+- [Центри обігріву на Закарпатті](https://lb.ua/society/2022/02/26/507050_zakarpatti_vimushenih.html)
+- [Волонтери Польща - машини, житло](https://www.facebook.com/groups/683793819641997/?ref=share)
 
 
 Транспорт/Виїзд 🚗
 - https://www.ukrainenow.org/refuge
 - https://docs.google.com/document/d/1CaN8TjVelx2uLrlTQbkVNnOb6IWzOdLO\_Aqmps0hS-U/mobilebasic
 - https://in-poland.com/vezd-v-polshu-iz-ukrainy-aktualnaya-informatsiya/
+- https://t.me/pomoc2022
+- https://t.me/UkrzalInfo
+- [Допомога закарпаття (машини, ситуація на кордоні і тд)](https://t.me/helpzakarpattia)
+- [Список водіїв](https://docs.google.com/spreadsheets/d/13lT4ja1qVoWKMAVaxApLq_wpx7YYHKLdzJbPYhA46GA/htmlview?fbclid=IwAR33tCPlOZh93OlBuvks8nu6nnKH70DNmGzBUar6r5Udx08mjkuI_Eq2H04%23gid%3D0#)
+- [Перевіз громадян у Польшу](https://t.me/perevezite)
+- [Coordination Ukraine Road](https://t.me/+g_QZESG1yuMwZThi)
+- [Drivers UA border](https://t.me/+CB4Y-s4O8kM4Yzcy)
+
 
 Пам'ятайте, ПОЇЗДИ зараз функціонують БЕЗКОШТОВНО! 🚊
 
@@ -53,6 +70,10 @@ INFO = """
 - @korotkoiyasn
 - @insiderUKR
 - @Tsaplienko
+
+[Карта, де люди та організації можуть допомогти якоюсь послугою біженцям з України](https://mapahelp.me/)
+[Бот, який допоможе в екстреній ситуації](https://t.me/DovidkaInfo_bot)
+[Пам'ятка біженцям](https://docs.google.com/document/d/1Te15giZrNWc55DUIsT6JCjLvlSkKlz9shHt8_TyhiQY/edit)
 
 Ця сторінка регулярно поповнюватиметься корисною інформацією.
 Щодо будь-яких питань та пропозицій пишіть @polianskyi

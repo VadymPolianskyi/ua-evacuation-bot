@@ -34,7 +34,6 @@ INFO = """
 - https://prykhystok.in.ua/
 - https://www.facebook.com/groups/347615063908402/?ref=share  (Молдова)
 
-
 Транспорт/Виїзд 🚗
 - https://www.ukrainenow.org/refuge
 - https://docs.google.com/document/d/1CaN8TjVelx2uLrlTQbkVNnOb6IWzOdLO\_Aqmps0hS-U/mobilebasic
@@ -49,12 +48,20 @@ INFO = """
 Телеграм Чати
 - @ukr\_helps
 - @moldovaukraina
+- @ukraineprague
 - [Військова міграція](https://t.me/+aBHYFKm9Nu5jMzk0)
 
 Телеграм Канали з Новинами
 - @korotkoiyasn
 - @insiderUKR
 - @Tsaplienko
+
+Решта
+- [Приватна клініка по всій румунії (безкоштовно)](https://www.reginamaria.ro/servicii-medicale-gratuite-pentru-cetatenii-ucraineni)
+- [Група допомоги по всій Румунії](https://www.facebook.com/groups/unitipentruucraina/?ref=share) 
+- [Повний список корисних посилань для громадян України у Молдові](https://help-ua.daoi-source.com/)
+- [Пошук по регіонах на інтерактивній карті](https://help-ua.daoi-source.com/)
+
 
 Ця сторінка регулярно поповнюватиметься корисною інформацією.
 Щодо будь-яких питань та пропозицій пишіть @polianskyi

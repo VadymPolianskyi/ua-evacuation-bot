@@ -17,6 +17,7 @@ class FindGeneral:
         menu_keyboard = markup.create_inline_markup_([
             (msg.FIND_HOME_BUTTON, marker.FIND_HOME, '_'),
             (msg.FIND_TRIP_BUTTON, marker.FIND_TRIP, '_'),
+            (msg.FIND_MY_BUTTON, marker.FIND_MY, '_'),
             (msg.BACK_BUTTON, marker.MENU, '_')
         ])
 

@@ -7,6 +7,7 @@ from src.config import config
 from src.handler.find.find import FindCallbackHandler
 from src.handler.find.find_create import FindCreateCallbackHandler
 from src.handler.find.find_home import FindHomeCallbackHandler, FindHomeCityAnswerHandler
+from src.handler.find.find_my import FindMyAnnouncementsCallbackHandler
 from src.handler.find.find_trip import FindTripCallbackHandler, FindTripCityFromAnswerHandler, \
     FindTripCityToAnswerHandler
 from src.handler.info import InfoCallbackHandler
@@ -43,6 +44,7 @@ callback_router = CallbackRouter([
     FindHomeCallbackHandler(),
     FindTripCallbackHandler(),
     FindCreateCallbackHandler(announcement_service),
+    FindMyAnnouncementsCallbackHandler(announcement_service),
 
     DeleteAnnouncementBeforeVoteCallbackHandler(announcement_service),
     DeleteEventAfterVoteCallbackHandler(announcement_service)

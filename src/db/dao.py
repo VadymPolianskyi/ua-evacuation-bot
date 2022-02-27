@@ -3,7 +3,7 @@ from typing import Optional
 import pymysql
 
 from src.config import config
-from src.db.entity import AnnouncementEntity, City
+from src.db.entity import AnnouncementEntity, City, User
 
 
 def create_connection():
@@ -146,3 +146,21 @@ class CityDao(Dao):
         query = f'SELECT * FROM `{self.__table}` WHERE name=%s;'
         r = self._select_one(query, city_name)
         return City.from_dict(r) if r else None
+
+
+class UserDao(Dao):
+    def __init__(self):
+        self.__table = config.DB_TABLE_USER
+
+    def save(self, user: User):
+        query = f"""
+        INSERT INTO `{self.__table}` (`id`) 
+        VALUES (%s);
+        """
+        self._execute(query, (user.id))
+
+    def find(self, user_id: int) -> Optional[City]:
+        print(f"Find User({user_id})")
+        query = f'SELECT * FROM `{self.__table}` WHERE id=%s;'
+        r = self._select_one(query, (user_id))
+        return User.from_dict(r) if r else None

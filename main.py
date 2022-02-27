@@ -2,6 +2,7 @@ import asyncio
 
 from aiogram import Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.types import Message
 
 from src.config import config
 from src.handler.find.find import FindCallbackHandler
@@ -25,6 +26,7 @@ from src.handler.state import ShareHomeState, ShareTripState, FindHomeState, Fin
 from src.service.announcement import AnnouncementService
 #### TG BOT ####
 from src.service.city import CityService
+from src.service.user import UserService
 
 bot = Bot(token=config.BOT_API_TOKEN, parse_mode=config.PARSE_MODE)
 dp = Dispatcher(bot, storage=MemoryStorage())
@@ -32,6 +34,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 #### SERVICES ####
 announcement_service = AnnouncementService()
 city_service = CityService()
+user_service = UserService()
 
 #### CALLBACK ####
 callback_router = CallbackRouter([
@@ -76,7 +79,10 @@ find_trip_city_to_answer_handler = FindTripCityToAnswerHandler(announcement_serv
 #################################
 
 @dp.message_handler(commands=['start', 'help', 'menu'])
-async def menu(message):
+async def menu(message: Message):
+    if not user_service.find_or_create(message.from_user.id):
+        user_service.save(message.from_user.id)
+
     await menu_handler.handle(message)
 
 

@@ -15,6 +15,16 @@ class AnnouncementServiceType(Enum):
     trip = TRIP_TYPE_NAME
 
 
+class User:
+    def __init__(self, id: str, created: datetime = None):
+        self.id = id
+        self.created = created
+
+    @classmethod
+    def from_dict(cls, r):
+        return User(id=r['id'], created=r['created'])
+
+
 class City:
     def __init__(self, name: str, country: str, id: int = None):
         self.id = id

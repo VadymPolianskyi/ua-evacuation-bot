@@ -70,10 +70,12 @@ INFO = """
 - @insiderUKR
 - @Tsaplienko
 
-[Карта, де люди та організації можуть допомогти якоюсь послугою біженцям з України](https://mapahelp.me/)
-[Бот, який допоможе в екстреній ситуації](https://t.me/DovidkaInfo_bot)
-[Пам'ятка біженцям](https://docs.google.com/document/d/1Te15giZrNWc55DUIsT6JCjLvlSkKlz9shHt8_TyhiQY/edit)
-[Молдова](https://dopomoga.life/?fbclid=IwAR27iC3_NqX28sSu92XJ2J1NAgGRUXNc14WxoC1-pwk-Wkf1LltV4beiPZw)
+Бiльше
+- @itarmyofukraine2022
+- [Карта, де люди та організації можуть допомогти якоюсь послугою біженцям з України](https://mapahelp.me/)
+- [Бот, який допоможе в екстреній ситуації](https://t.me/DovidkaInfo_bot)
+- [Пам'ятка біженцям](https://docs.google.com/document/d/1Te15giZrNWc55DUIsT6JCjLvlSkKlz9shHt8_TyhiQY/edit)
+- [Молдова](https://dopomoga.life/?fbclid=IwAR27iC3_NqX28sSu92XJ2J1NAgGRUXNc14WxoC1-pwk-Wkf1LltV4beiPZw)
 
 Ця сторінка регулярно поповнюватиметься корисною інформацією.
 Щодо будь-яких питань та пропозицій пишіть @polianskyi

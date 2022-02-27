@@ -3,6 +3,7 @@ INFO = 'inf'
 
 FIND = 'fnd'
 
+FIND_CREATE = 'fndc'
 FIND_HOME = 'fndh'
 FIND_TRIP = 'fndt'
 

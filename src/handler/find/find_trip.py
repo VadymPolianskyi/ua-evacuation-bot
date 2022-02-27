@@ -1,12 +1,11 @@
 from aiogram import Dispatcher
-from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
 
 from src.config import marker, msg, limits
 from src.db.entity import AnnouncementType, AnnouncementServiceType
-from src.handler.find.find import FindGeneral
 from src.handler.general import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
 from src.handler.state import FindTripState
-from src.service import cities, file_service
+from src.service import cities, file_service, markup
 from src.service.announcement import AnnouncementService
 
 
@@ -16,6 +15,21 @@ class FindTripGeneral:
         await message.answer(
             tg_msg,
             reply_markup=ReplyKeyboardMarkup(keyboard=cities_buttons, resize_keyboard=False, one_time_keyboard=True))
+
+    async def _show_result(self, message: Message, final_message: str, user_id: int):
+        print(f"Final message: {final_message}")
+
+        menu_keyboard = markup.create_inline_markup_([
+            (msg.FIND_CREATE_BUTTON, marker.FIND_CREATE, '_'),
+            (msg.BACK_BUTTON, marker.FIND, '_')
+        ])
+
+        if len(final_message) > limits.FIND_RESPONSE_LIMIT:
+            f = file_service.create_text_file(final_message, AnnouncementServiceType.trip.value, user_id)
+            await message.answer_document(f, reply_markup=menu_keyboard)
+            file_service.close(f)
+        else:
+            await message.answer(final_message, reply_markup=menu_keyboard)
 
 
 class FindTripCallbackHandler(TelegramCallbackHandler, FindTripGeneral):
@@ -47,11 +61,10 @@ class FindTripCityFromAnswerHandler(TelegramMessageHandler, FindTripGeneral):
             await FindTripState.waiting_for_city_from.set()
 
 
-class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral, FindGeneral):
+class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral):
     def __init__(self, announcement_service: AnnouncementService):
         TelegramMessageHandler.__init__(self)
         FindTripGeneral.__init__(self)
-        FindGeneral.__init__(self)
         self.announcement_service = announcement_service
 
     async def handle_(self, message: MessageMeta, *args):
@@ -68,18 +81,11 @@ class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral, FindG
 
             announcements: str = "\n" + "\n\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
 
-            final_message = msg.FIND_TRIP_RESULT.format(city_from, print_city_to, announcements) \
-                .replace('_', '\_')
+            final_message = msg.FIND_TRIP_RESULT.format(city_from, print_city_to, announcements).replace('_', '\_')
+            await self._show_result(message.original, final_message, message.user_id)
 
-            if len(final_message) > limits.FIND_RESPONSE_LIMIT:
-                f = file_service.create_text_file(final_message, AnnouncementServiceType.trip.value, message.user_id)
-                await message.original.answer_document(f, reply_markup=ReplyKeyboardRemove())
-                file_service.close(f)
-            else:
-                await message.original.answer(final_message, reply_markup=ReplyKeyboardRemove())
-
-            await Dispatcher.get_current().current_state().finish()
-            await self._show_find_menu(message.original)
+            await Dispatcher.get_current().current_state().update_data(
+                a_service=AnnouncementServiceType.trip, city_from=city_from, city_to=city_to)
         else:
             await self._show_cities(message.original, msg.FIND_TRIP_CITY_TO, with_any=True)
             await FindTripState.waiting_for_city_to.set()

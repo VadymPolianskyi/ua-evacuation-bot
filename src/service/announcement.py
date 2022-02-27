@@ -12,7 +12,7 @@ class AnnouncementService:
         self.dao = AnnouncementDao()
 
     def create_home(self, user_id: int, a_type: AnnouncementType,
-                    a_service: AnnouncementServiceType, city: str, info: str) -> Announcement:
+                    a_service: AnnouncementServiceType, city: str, info: str = None) -> Announcement:
         print(f"Create Announcement(user_id={user_id}, a_type={a_type.name}, " +
               f"a_service={a_service.name} city={city}, info={info})")
         a = Announcement(user_id=user_id, a_type=a_type, a_service=a_service, city_a=city, info=info)
@@ -24,7 +24,7 @@ class AnnouncementService:
 
     def create_trip(self, user_id: int, a_type: AnnouncementType,
                     a_service: AnnouncementServiceType, city_a: str,
-                    city_b: str, info: str, scheduled: datetime) -> Announcement:
+                    city_b: str, info: str = None, scheduled: datetime = None) -> Announcement:
         print(f"Create Announcement(user_id={user_id}, a_type={a_type.name}, " +
               f"a_service={a_service.name}, city_a={city_a}, city_b={city_b}, " +
               f"info={info}, scheduled={scheduled})")
@@ -46,10 +46,11 @@ class AnnouncementService:
         print(f"Find Announcement(announcement_id={announcement_id})")
         return self.dao.find(announcement_id)
 
-    @cached(cache=TTLCache(5, 5))
     def find_by_user(self, user_id: int, a_type: AnnouncementType):
         print(f"Find Announcements(user_id={user_id}, a_type={a_type.name})")
-        return [a for a in self.dao.find_by_user(user_id) if a.a_type == a_type]
+        result = [a for a in self.dao.find_by_user(user_id) if a.a_type == a_type]
+        print(f"Found {len(result)} Announcements(user_id={user_id}, a_type={a_type.name})")
+        return result
 
     def find_by_city(self, city: str, a_type: AnnouncementType, a_service: AnnouncementServiceType, city_to=None):
         print(f"Find Announcements(a_type={a_type.name}, a_service={a_service.name}, city={city})")

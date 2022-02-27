@@ -1,3 +1,26 @@
+# BUTTONS
+
+FIND_BUTTON = "Знайти 🙏"
+SHARE_BUTTON = "Надати 🙌"
+
+MY_BUTTON = "Мої оголошення 📣"
+INFO_BUTTON = "Корисна інформація 📃"
+
+SHARE_HOME_BUTTON = "Житло 🏠"
+SHARE_TRIP_BUTTON = "Транспорт 🚗"
+
+FIND_CREATE_BUTTON = "Оставить заявку 🔔"
+FIND_HOME_BUTTON = "Житло 🏠"
+FIND_TRIP_BUTTON = "Транспорт 🚗"
+
+BACK_BUTTON = '🔙 Назад'
+
+# VOTE
+YES = '✅ Так'
+NO = '❌ Нi'
+
+# TEXT
+
 MENU = """
 Бот створений, щоб допомогти знайтися тим, хто хоче надати допомогу та тим, хто її шукає 🙏
 """
@@ -50,6 +73,16 @@ SHARE = """
 
 Оберіть, що ви хотіли б надати:
 """
+
+FIND_BEFORE = f"""
+Ваши предыдущие заявки 🔔:
+
+{'{'}{'}'}
+
+Вы можете управлять ими через раздел `{MY_BUTTON}` в главном меню.
+
+"""
+
 FIND = "Оберіть, що ви хотіли б знайти:"
 
 CITY_GENERAL = "Оберіть місто 🏙 (якщо його немає у списку, оберіть обласний центр) ⬇️"
@@ -69,7 +102,9 @@ FIND_TRIP_RESULT = """
 {}
 """
 
-FIND_NOTHING = "Поки що нічого... 😔"
+FIND_NOTHING = "Пока что ничего, но вы можете оставить заявку и мы сообщим вам, когда такое обьявление появиться 🤞"
+
+FIND_CREATE_DONE = "Заявка создана, мы сообщим вам, когда появится обьявление, которое может быть вам полезным 🙏"
 
 SHARE_HOME_CITY = CITY_GENERAL
 SHARE_HOME_INFO = """
@@ -122,25 +157,6 @@ SHARE_TRIP_DONE = """
 DELETE_ANNOUNCEMENT_VOTE = "🗑 Ви впевнені, що хочете видалити це оголошення?"
 DELETE_ANNOUNCEMENT_DONE = "✅ Оголошення видалено"
 DELETE_ANNOUNCEMENT_CANCELED = "❌ Видалення скасовано"
-
-# BUTTONS
-FIND_BUTTON = "Знайти 🙏"
-SHARE_BUTTON = "Надати 🙌"
-
-MY_BUTTON = "Мої оголошення 📣"
-INFO_BUTTON = "Корисна інформація 📃"
-
-SHARE_HOME_BUTTON = "Житло 🏠"
-SHARE_TRIP_BUTTON = "Транспорт 🚗"
-
-FIND_HOME_BUTTON = "Житло 🏠"
-FIND_TRIP_BUTTON = "Транспорт 🚗"
-
-BACK_BUTTON = '🔙 Назад'
-
-# VOTE
-YES = '✅ Так'
-NO = '❌ Нi'
 
 TRIP_TYPE_NAME = "Транспорт"
 HOME_TYPE_NAME = "Житло"

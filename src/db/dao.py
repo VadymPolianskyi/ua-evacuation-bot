@@ -71,16 +71,13 @@ class AnnouncementDao(Dao):
         self.__table = config.DB_TABLE_ANNOUNCEMENT
 
     def save(self, ann: Announcement):
-        # city_b_field = '`city_b`' if ann.city_b else ''
-
         query = f"""
         INSERT INTO `{self.__table}` (`id`, `user_id`, `a_type`, `a_service`, `city_a`, `city_b`, `info`, `scheduled`) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
         """
-        self._execute(
-            query,
-            (ann.id, ann.user_id, ann.a_type.name, ann.a_service.name, ann.city_a,
-             ann.city_b, ann.info, ann.scheduled))
+        self._execute(query,
+                      (ann.id, ann.user_id, ann.a_type.name, ann.a_service.name,
+                       ann.city_a, ann.city_b, ann.info, ann.scheduled))
 
     def find(self, announcement_id: str) -> Optional[Announcement]:
         print(f"Find Announcement({announcement_id})")

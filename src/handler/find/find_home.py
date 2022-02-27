@@ -1,12 +1,11 @@
 from aiogram import Dispatcher
-from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
 
 from src.config import marker, msg, limits
 from src.db.entity import AnnouncementType, AnnouncementServiceType
-from src.handler.find.find import FindGeneral
 from src.handler.general import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
 from src.handler.state import FindHomeState
-from src.service import cities, file_service
+from src.service import cities, file_service, markup
 from src.service.announcement import AnnouncementService
 
 
@@ -17,6 +16,21 @@ class FindHomeGeneral:
             msg.FIND_HOME_CITY,
             reply_markup=ReplyKeyboardMarkup(keyboard=cities_buttons, resize_keyboard=False, one_time_keyboard=True))
         await FindHomeState.waiting_for_city.set()
+
+    async def _show_result(self, message: Message, final_message: str, user_id: int):
+        print(f"Final message: {final_message}")
+
+        menu_keyboard = markup.create_inline_markup_([
+            (msg.FIND_CREATE_BUTTON, marker.FIND_CREATE, '_'),
+            (msg.BACK_BUTTON, marker.FIND, '_')
+        ])
+
+        if len(final_message) > limits.FIND_RESPONSE_LIMIT:
+            f = file_service.create_text_file(final_message, AnnouncementServiceType.home.value, user_id)
+            await message.answer_document(f, reply_markup=menu_keyboard)
+            file_service.close(f)
+        else:
+            await message.answer(final_message, reply_markup=menu_keyboard, disable_web_page_preview=True)
 
 
 class FindHomeCallbackHandler(TelegramCallbackHandler, FindHomeGeneral):
@@ -30,11 +44,10 @@ class FindHomeCallbackHandler(TelegramCallbackHandler, FindHomeGeneral):
         await self._show_cities(callback.original.message)
 
 
-class FindHomeCityAnswerHandler(TelegramMessageHandler, FindHomeGeneral, FindGeneral):
+class FindHomeCityAnswerHandler(TelegramMessageHandler, FindHomeGeneral):
     def __init__(self, announcement_service: AnnouncementService):
         TelegramMessageHandler.__init__(self)
         FindHomeGeneral.__init__(self)
-        FindGeneral.__init__(self)
         self.announcement_service = announcement_service
 
     async def handle_(self, message: MessageMeta, *args):
@@ -45,19 +58,11 @@ class FindHomeCityAnswerHandler(TelegramMessageHandler, FindHomeGeneral, FindGen
 
             announcements: str = "\n" + "\n\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
 
-            final_message = msg.FIND_HOME_RESULT.format(city, announcements) \
-                .replace('_', '\_')
-            print(f"Final message: {final_message}")
+            final_message = msg.FIND_HOME_RESULT.format(city, announcements).replace('_', '\_')
+            await self._show_result(message.original, final_message, message.user_id)
 
-            if len(final_message) > limits.FIND_RESPONSE_LIMIT:
-                f = file_service.create_text_file(final_message, AnnouncementServiceType.home.value, message.user_id)
-                await message.original.answer_document(f, reply_markup=ReplyKeyboardRemove())
-                file_service.close(f)
-            else:
-                await message.original.answer(final_message, reply_markup=ReplyKeyboardRemove())
-
-            await Dispatcher.get_current().current_state().finish()
-            await self._show_find_menu(message.original)
+            await Dispatcher.get_current().current_state().update_data(
+                a_service=AnnouncementServiceType.home, city=city)
         else:
             await self._show_cities(message.original)
             await FindHomeState.waiting_for_city.set()

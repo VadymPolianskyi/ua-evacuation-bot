@@ -21,7 +21,7 @@ class Announcement:
                  a_type: AnnouncementType,
                  a_service: AnnouncementServiceType,
                  city_a: str,
-                 info: str,
+                 info: str = None,
                  id: str = None,
                  city_b: str = None,
                  scheduled: datetime = None,
@@ -44,11 +44,17 @@ class Announcement:
             return self.city_a + " - " + self.city_b
 
     def to_str(self):
-        if self.a_service == AnnouncementServiceType.home:
-            return f"Житло 🏠 `{self.city_a}`\nІнформація: {self.info}"
+        if self.a_type == AnnouncementType.share:
+            if self.a_service == AnnouncementServiceType.home:
+                return f"Житло 🏠 `{self.city_a}`\nІнформація: {self.info}"
+            else:
+                time = self.scheduled.strftime("%d-%m-%Y, %H:%M")
+                return f"Транспорт 🚗 (`{self.city_a}` - `{self.city_b}`)\nЧас: {time}\nІнформація: {self.info}"
         else:
-            time = self.scheduled.strftime("%d-%m-%Y, %H:%M")
-            return f"Транспорт 🚗 (`{self.city_a}` - `{self.city_b}`)\nЧас: {time}\nІнформація: {self.info}"
+            if self.a_service == AnnouncementServiceType.home:
+                return f"Житло 🏠 `{self.city_a}`"
+            else:
+                return f"Транспорт 🚗 `{self.city_a}` - `{self.city_b}`"
 
     @classmethod
     def from_dict(cls, r):

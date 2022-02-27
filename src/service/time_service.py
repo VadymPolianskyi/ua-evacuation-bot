@@ -31,7 +31,7 @@ def extract_from_time(time_str: str) -> Optional[datetime]:
 
 def extract_datetime(date_time_str: str) -> Optional[datetime]:
     try:
-        extracted = datetime.strptime(date_time_str, '%d-%m-%Y %H:%M')
+        extracted = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
     except ValueError:
         print(f"Error when converting '{date_time_str}' to datetime")
         extracted = extract_from_time(date_time_str)

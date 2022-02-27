@@ -48,8 +48,8 @@ class Announcement:
             if self.a_service == AnnouncementServiceType.home:
                 return f"Житло 🏠 `{self.city_a}`\nІнформація: {self.info}"
             else:
-                time = self.scheduled.strftime("%d-%m-%Y, %H:%M")
-                return f"Транспорт 🚗 (`{self.city_a}` - `{self.city_b}`)\nЧас: {time}\nІнформація: {self.info}"
+                time = self.scheduled.strftime("%Y-%m-%d, %H:%M")
+                return f"Транспорт 🚗 `{self.city_a}` - `{self.city_b}`\nЧас: {time}\nІнформація: {self.info}"
         else:
             if self.a_service == AnnouncementServiceType.home:
                 return f"Житло 🏠 `{self.city_a}`"

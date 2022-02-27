@@ -106,8 +106,7 @@ class ShareTripSchedulingAnswerHandler(TelegramMessageHandler, ShareTripGeneral)
 class ShareTripInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
     def __init__(self, announcement_service: AnnouncementService):
         TelegramMessageHandler.__init__(self)
-        ShareGeneral.__init__(self)
-        self.announcement_service = announcement_service
+        ShareGeneral.__init__(self, announcement_service)
 
     async def handle_(self, message: MessageMeta, *args):
         state_data: dict = await Dispatcher.get_current().current_state().get_data()
@@ -119,11 +118,13 @@ class ShareTripInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
 
         if len(info) <= INFO_SYMBOLS_LIMIT:
 
-            self.announcement_service.create_trip(message.user_id, AnnouncementType.share,
-                                                  AnnouncementServiceType.trip, city_from, city_to, info, scheduling)
-            # todo: find all for this city and send them
+            a = self.announcement_service.create_trip(
+                message.user_id, AnnouncementType.share,
+                AnnouncementServiceType.trip, city_from, city_to, info, scheduling)
+
             await message.original.answer(msg.SHARE_TRIP_DONE.format(city_from, city_to, info, scheduling))
             await Dispatcher.get_current().current_state().finish()
+            await self._alert_if_match(message.original, a)
             await self._show_share_menu(message.original)
         else:
             diff = len(info) - INFO_SYMBOLS_LIMIT

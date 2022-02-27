@@ -52,19 +52,19 @@ class ShareHomePostCityAnswerHandler(TelegramMessageHandler, ShareHomeGeneral):
 class ShareHomePostInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
     def __init__(self, announcement_service: AnnouncementService):
         TelegramMessageHandler.__init__(self)
-        ShareGeneral.__init__(self)
-        self.announcement_service = announcement_service
+        ShareGeneral.__init__(self, announcement_service)
 
     async def handle_(self, message: MessageMeta, *args):
         info = message.text
         city = (await Dispatcher.get_current().current_state().get_data())['city']
 
         if len(info) <= INFO_SYMBOLS_LIMIT:
-            self.announcement_service.create_home(message.user_id, AnnouncementType.share,
-                                                  AnnouncementServiceType.home, city, info)
-            # todo: find all for this city and send them
+            a = self.announcement_service.create_home(message.user_id, AnnouncementType.share,
+                                                      AnnouncementServiceType.home, city, info)
+
             await message.original.answer(msg.SHARE_HOME_DONE.format(city, info))
             await Dispatcher.get_current().current_state().finish()
+            await self._alert_if_match(message.original, a)
             await self._show_share_menu(message.original)
         else:
             diff = len(info) - INFO_SYMBOLS_LIMIT

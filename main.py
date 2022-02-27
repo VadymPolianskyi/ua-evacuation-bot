@@ -32,7 +32,7 @@ announcement_service = AnnouncementService()
 #### CALLBACK ####
 callback_router = CallbackRouter([
     MenuCallbackHandler(),
-    ShareCallbackHandler(),
+    ShareCallbackHandler(announcement_service),
     FindCallbackHandler(announcement_service),
     MyAnnouncementsCallbackHandler(announcement_service),
     InfoCallbackHandler(),

@@ -27,9 +27,10 @@ class FindCreateCallbackHandler(TelegramCallbackHandler, FindGeneral):
 
             already_created = self.announcement_service.find_by_city(city, AnnouncementType.find,
                                                                      AnnouncementServiceType.home)
-            print(f"User({callback.user_id}): already_created = {already_created}")
+            created_by_user = [a for a in already_created if a.user_id == callback.user_id]
+            print(f"User({callback.user_id}): created_by_user = {created_by_user}")
 
-            if not already_created:
+            if not created_by_user:
                 self.announcement_service.create_home(callback.user_id, AnnouncementType.find,
                                                       AnnouncementServiceType.home, city)
         else:
@@ -39,9 +40,10 @@ class FindCreateCallbackHandler(TelegramCallbackHandler, FindGeneral):
 
             already_created = self.announcement_service.find_by_city(city_from, AnnouncementType.find,
                                                                      AnnouncementServiceType.trip, city_to)
-            print(f"User({callback.user_id}): already_created = {already_created}")
+            created_by_user = [a for a in already_created if a.user_id == callback.user_id]
+            print(f"User({callback.user_id}): created_by_user = {created_by_user}")
 
-            if not already_created:
+            if not created_by_user:
                 self.announcement_service.create_trip(callback.user_id, AnnouncementType.find,
                                                       AnnouncementServiceType.trip, city_from, city_to)
         print(f"User({callback.user_id}): notification creating is finished")

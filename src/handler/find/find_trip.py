@@ -85,7 +85,7 @@ class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral):
             await self._show_result(message.original, final_message, message.user_id)
 
             await Dispatcher.get_current().current_state().update_data(
-                a_service=AnnouncementServiceType.trip, city_from=city_from, city_to=city_to)
+                a_service=AnnouncementServiceType.trip, city_from=city_from, city_to=print_city_to)
         else:
             await self._show_cities(message.original, msg.FIND_TRIP_CITY_TO, with_any=True)
             await FindTripState.waiting_for_city_to.set()

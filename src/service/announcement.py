@@ -63,7 +63,6 @@ class AnnouncementService:
         result = a.a_type == a_type
         result = result and a.a_service == a_service
         result = result and (city_to is None or a.city_b in cities.any() or a.city_b == city_to)
-        if a_service == AnnouncementServiceType.trip:
+        if a_service == AnnouncementServiceType.trip and a_type == AnnouncementType.share:
             result = time_service.validate(a.scheduled)
-
         return result

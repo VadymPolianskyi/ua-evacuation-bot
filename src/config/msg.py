@@ -30,38 +30,53 @@ MENU = """
 INFO = """
 ❗Корисні ресурси:
 
+- [Агрегована iнвофмацiя](https://docs.google.com/document/d/1ZCxrK4520gSGiGy4Cvqbzzn6TkB02j85XlGc5J5cFrQ/mobilebasic?fbclid=IwAR2H3kUQvBVGuXwi1EimKQu3zfu4s8mO8smhU5PozgKrtG-GC48bjCtgYCc#h.x9logjleyhsb)
+
 Житло 🏠
-- https://prykhystok.in.ua/
-- https://www.facebook.com/groups/347615063908402/?ref=share  (Молдова)
+- [Прихисток](https://prykhystok.in.ua/)
+- [Молдова](https://www.facebook.com/groups/347615063908402/?ref=share)
+- [Польща](https://www.gov.pl/web/udsc/ukraina---ua)
+- [Житло  на Західній для біженців](https://t.me/+mteSsw5p5K9jOWEy)
+- [Центри обігріву на Закарпатті](https://lb.ua/society/2022/02/26/507050_zakarpatti_vimushenih.html)
+- [Волонтери Польща - машини, житло](https://www.facebook.com/groups/683793819641997/?ref=share)
+- [Форма для заповнення](https://docs.google.com/forms/d/e/1FAIpQLSerQV8PufaIagMPTZ36mlNeVGOzElh_G-sXOAmNvZQUUXS9GQ/viewform)
+- @winwin\_realty
+- @help\_find\_house
+
 
 Транспорт/Виїзд 🚗
-- https://www.ukrainenow.org/refuge
-- https://docs.google.com/document/d/1CaN8TjVelx2uLrlTQbkVNnOb6IWzOdLO\_Aqmps0hS-U/mobilebasic
-- https://in-poland.com/vezd-v-polshu-iz-ukrainy-aktualnaya-informatsiya/
+- [Bla-bla car in war](https://www.ukrainenow.org/refuge)
+- [В'їзд до Польщі з України. Актуальна інформація](https://in-poland.com/vezd-v-polshu-iz-ukrainy-aktualnaya-informatsiya/)
+- [Список водіїв](https://docs.google.com/spreadsheets/d/13lT4ja1qVoWKMAVaxApLq_wpx7YYHKLdzJbPYhA46GA/htmlview?fbclid=IwAR33tCPlOZh93OlBuvks8nu6nnKH70DNmGzBUar6r5Udx08mjkuI_Eq2H04%23gid%3D0#)
+- [Coordination Ukraine Road](https://t.me/+g_QZESG1yuMwZThi)
+- [Drivers UA border](https://t.me/+CB4Y-s4O8kM4Yzcy)
+- @pomoc2022
+- @UkrzalInfo
+- @perevezite
+
 
 Пам'ятайте, ПОЇЗДИ зараз функціонують БЕЗКОШТОВНО! 🚊
 
 Благодійність 🕊
-- https://savelife.in.ua/en/donate/
-- https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi
+- [Повернись живим](https://savelife.in.ua/en/donate/)
+- [Національний банк](https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi)
 
 Телеграм Чати
 - @ukr\_helps
 - @moldovaukraina
-- @ukraineprague
-- [Військова міграція](https://t.me/+aBHYFKm9Nu5jMzk0)
+- @helpzakarpattia
 
 Телеграм Канали з Новинами
 - @korotkoiyasn
 - @insiderUKR
 - @Tsaplienko
 
-Решта
-- [Приватна клініка по всій румунії (безкоштовно)](https://www.reginamaria.ro/servicii-medicale-gratuite-pentru-cetatenii-ucraineni)
-- [Група допомоги по всій Румунії](https://www.facebook.com/groups/unitipentruucraina/?ref=share) 
-- [Повний список корисних посилань для громадян України у Молдові](https://help-ua.daoi-source.com/)
-- [Пошук по регіонах на інтерактивній карті](https://help-ua.daoi-source.com/)
-
+Бiльше
+- @itarmyofukraine2022
+- [Карта, де люди та організації можуть допомогти якоюсь послугою біженцям з України](https://mapahelp.me/)
+- [Бот, який допоможе в екстреній ситуації](https://t.me/DovidkaInfo_bot)
+- [Пам'ятка біженцям](https://docs.google.com/document/d/1Te15giZrNWc55DUIsT6JCjLvlSkKlz9shHt8_TyhiQY/edit)
+- [Молдова](https://dopomoga.life/?fbclid=IwAR27iC3_NqX28sSu92XJ2J1NAgGRUXNc14WxoC1-pwk-Wkf1LltV4beiPZw)
 
 Ця сторінка регулярно поповнюватиметься корисною інформацією.
 Щодо будь-яких питань та пропозицій пишіть @polianskyi

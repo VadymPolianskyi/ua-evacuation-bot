@@ -48,6 +48,7 @@ INFO = """
 Телеграм Чати
 - @ukr\_helps
 - @moldovaukraina
+- [Військова міграція](https://t.me/+aBHYFKm9Nu5jMzk0)
 
 Телеграм Канали з Новинами
 - @korotkoiyasn

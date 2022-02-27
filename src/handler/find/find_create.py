@@ -2,7 +2,7 @@ from aiogram import Dispatcher
 from aiogram.types import ReplyKeyboardRemove
 
 from src.config import msg, marker
-from src.db.entity import AnnouncementType, AnnouncementServiceType
+from src.db.entity import AnnouncementType, AnnouncementServiceType, City
 from src.handler.find.find import FindGeneral
 from src.handler.general import TelegramCallbackHandler, CallbackMeta
 from src.service.announcement import AnnouncementService
@@ -22,30 +22,33 @@ class FindCreateCallbackHandler(TelegramCallbackHandler, FindGeneral):
         print(f"User({callback.user_id}): service = {a_service.value}")
 
         if a_service == AnnouncementServiceType.home:
-            city: str = state_data['city']
-            print(f"User({callback.user_id}): city = {city}")
+            city: City = state_data['city']
+            print(f"User({callback.user_id}): city = {city.name}")
 
-            already_created = self.announcement_service.find_by_city(city, AnnouncementType.find,
+            already_created = self.announcement_service.find_by_city(city.id, AnnouncementType.find,
                                                                      AnnouncementServiceType.home)
             created_by_user = [a for a in already_created if a.user_id == callback.user_id]
             print(f"User({callback.user_id}): created_by_user = {created_by_user}")
 
             if not created_by_user:
-                self.announcement_service.create_home(callback.user_id, AnnouncementType.find,
-                                                      AnnouncementServiceType.home, city)
+                self.announcement_service.create(callback.user_id, AnnouncementType.find,
+                                                 AnnouncementServiceType.home, city.id)
         else:
-            city_from: str = state_data['city_from']
-            city_to: str = state_data['city_to']
-            print(f"User({callback.user_id}): city_from = {city_from}, city_to = {city_to}")
+            city_from: City = state_data['city_from']
+            city_to: City = state_data['city_to']
+            print(f"User({callback.user_id}): city_from = {city_from.name}, city_to = {city_to.name}")
 
-            already_created = self.announcement_service.find_by_city(city_from, AnnouncementType.find,
-                                                                     AnnouncementServiceType.trip, city_to)
+            already_created = self.announcement_service.find_by_city(
+                city_from_id=city_from.id,
+                a_type=AnnouncementType.find,
+                a_service=AnnouncementServiceType.trip,
+                city_to_id=city_to.id)
             created_by_user = [a for a in already_created if a.user_id == callback.user_id]
             print(f"User({callback.user_id}): created_by_user = {created_by_user}")
 
             if not created_by_user:
-                self.announcement_service.create_trip(callback.user_id, AnnouncementType.find,
-                                                      AnnouncementServiceType.trip, city_from, city_to)
+                self.announcement_service.create(callback.user_id, AnnouncementType.find,
+                                                 AnnouncementServiceType.trip, city_from.id, city_to.id)
         print(f"User({callback.user_id}): notification creating is finished")
 
         await callback.original.message.answer(msg.FIND_CREATE_DONE, reply_markup=ReplyKeyboardRemove())

@@ -15,58 +15,64 @@ class AnnouncementServiceType(Enum):
     trip = TRIP_TYPE_NAME
 
 
-class Announcement:
+class City:
+    def __init__(self, name: str, country: str, id: int = None):
+        self.id = id
+        self.name = name
+        self.country = country
+
+    @classmethod
+    def from_dict(cls, r):
+        return City(id=r['id'], name=r['name'], country=r['country'])
+
+
+class AnnouncementEntity:
     def __init__(self,
                  user_id: int,
                  a_type: AnnouncementType,
                  a_service: AnnouncementServiceType,
-                 city_a: str,
+                 city_from_id: int,
+
+                 city_a: str = None,
+                 city_b: str = None,
+
                  info: str = None,
                  id: str = None,
-                 city_b: str = None,
                  scheduled: datetime = None,
-                 created: datetime = None
+                 created: datetime = None,
+                 city_to_id: int = None
                  ):
         self.id = uuid.uuid4() if id is None else id
         self.user_id: int = user_id
         self.a_type: AnnouncementType = a_type
         self.a_service: AnnouncementServiceType = a_service
-        self.city_a: str = city_a
-        self.city_b: str = city_b
+        self.city_a = city_a
+        self.city_b = city_b
+        self.city_from_id: int = city_from_id
+        self.city_to_id: int = city_to_id
         self.info: str = info
         self.scheduled: datetime = scheduled
         self.created: datetime = created
 
-    def city(self) -> str:
-        if self.a_service is AnnouncementServiceType.home:
-            return self.city_a
-        else:
-            return self.city_a + " - " + self.city_b
-
     def to_str(self):
-        if self.a_type == AnnouncementType.share:
-            if self.a_service == AnnouncementServiceType.home:
-                return f"Житло 🏠 `{self.city_a}`\nІнформація: {self.info}"
-            else:
-                time = self.scheduled.strftime("%Y-%m-%d, %H:%M")
-                return f"Транспорт 🚗 `{self.city_a}` - `{self.city_b}`\nЧас: {time}\nІнформація: {self.info}"
-        else:
-            if self.a_service == AnnouncementServiceType.home:
-                return f"Житло 🏠 `{self.city_a}`"
-            else:
-                return f"Транспорт 🚗 `{self.city_a}` - `{self.city_b}`"
+        return f"AnnouncementEntity(user_id={self.user_id}, a_type={self.a_type.name}, " \
+               f"a_service={self.a_service.name}, city_from_id={self.city_from_id}, city_to_id={self.city_to_id}, " \
+               f"info={self.info}, scheduled={self.scheduled})"
 
     @classmethod
     def from_dict(cls, r):
-        a_type = AnnouncementType.share if r['a_type'] == "share" else AnnouncementType.find
-        a_service = AnnouncementServiceType.home if r['a_service'] == "home" else AnnouncementServiceType.trip
-        return Announcement(id=r['id'],
-                            user_id=r['user_id'],
-                            a_type=a_type,
-                            a_service=a_service,
-                            city_a=r['city_a'],
-                            city_b=r['city_b'],
-                            info=r['info'],
-                            scheduled=r['scheduled'],
-                            created=r['created']
-                            )
+        a_type = AnnouncementType.share if r['a_type'] == AnnouncementType.share.name else AnnouncementType.find
+        a_service = AnnouncementServiceType.home if \
+            r['a_service'] == AnnouncementServiceType.home.name else AnnouncementServiceType.trip
+        return AnnouncementEntity(id=r['id'],
+                                  user_id=r['user_id'],
+                                  a_type=a_type,
+                                  a_service=a_service,
+                                  city_from_id=r['city_from_id'],
+                                  city_to_id=r['city_to_id'],
+                                  city_a=r['city_a'],
+                                  city_b=r['city_b'],
+                                  info=r['info'],
+                                  scheduled=r['scheduled'],
+                                  created=r['created']
+                                  )

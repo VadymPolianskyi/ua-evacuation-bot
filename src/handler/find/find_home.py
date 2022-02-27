@@ -5,13 +5,18 @@ from src.config import marker, msg, limits
 from src.db.entity import AnnouncementType, AnnouncementServiceType
 from src.handler.general import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
 from src.handler.state import FindHomeState
-from src.service import cities, file_service, markup
+from src.service import file_service, markup
 from src.service.announcement import AnnouncementService
+from src.service.city import CityService
 
 
 class FindHomeGeneral:
+
+    def __init__(self, city_service: CityService):
+        self.city_service = city_service
+
     async def _show_cities(self, message: Message):
-        cities_buttons = [[KeyboardButton(tz)] for tz in cities.all()]
+        cities_buttons = [[KeyboardButton(tz)] for tz in self.city_service.find_all_titles()]
         await message.answer(
             msg.FIND_HOME_CITY,
             reply_markup=ReplyKeyboardMarkup(keyboard=cities_buttons, resize_keyboard=False, one_time_keyboard=True))
@@ -36,33 +41,34 @@ class FindHomeGeneral:
 class FindHomeCallbackHandler(TelegramCallbackHandler, FindHomeGeneral):
     MARKER = marker.FIND_HOME
 
-    def __init__(self):
+    def __init__(self, city_service: CityService):
         TelegramCallbackHandler.__init__(self)
-        FindHomeGeneral.__init__(self)
+        FindHomeGeneral.__init__(self, city_service)
 
     async def handle_(self, callback: CallbackMeta):
         await self._show_cities(callback.original.message)
 
 
 class FindHomeCityAnswerHandler(TelegramMessageHandler, FindHomeGeneral):
-    def __init__(self, announcement_service: AnnouncementService):
+    def __init__(self, announcement_service: AnnouncementService, city_service: CityService):
         TelegramMessageHandler.__init__(self)
-        FindHomeGeneral.__init__(self)
+        FindHomeGeneral.__init__(self, city_service)
         self.announcement_service = announcement_service
 
     async def handle_(self, message: MessageMeta, *args):
-        city = message.text
+        city_name = message.text
+        city = self.city_service.find_by_name(city_name)
 
-        if cities.validate(city):
-            res = self.announcement_service.find_by_city(city, AnnouncementType.share, AnnouncementServiceType.home)
+        if city and city.id != self.city_service.ANY_ID:
+            res = self.announcement_service.find_by_city(city.id, AnnouncementType.share, AnnouncementServiceType.home)
 
             announcements: str = "\n" + "\n\n".join([a.to_str() for a in res]) if res else msg.FIND_NOTHING
 
-            final_message = msg.FIND_HOME_RESULT.format(city, announcements).replace('_', '\_')
+            final_message = msg.FIND_HOME_RESULT.format(city.name, announcements).replace('_', '\_')
             await self._show_result(message.original, final_message, message.user_id)
 
-            await Dispatcher.get_current().current_state().update_data(
-                a_service=AnnouncementServiceType.home, city=city)
+            await Dispatcher.get_current().current_state() \
+                .update_data(a_service=AnnouncementServiceType.home, city=city)
         else:
             await self._show_cities(message.original)
             await FindHomeState.waiting_for_city.set()

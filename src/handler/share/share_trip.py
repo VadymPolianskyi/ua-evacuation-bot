@@ -6,19 +6,25 @@ from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKey
 from src.config import marker, msg
 from src.config.limits import INFO_SYMBOLS_LIMIT
 from src.config.msg import SHARE_INFO_WARNING
-from src.db.entity import AnnouncementType, AnnouncementServiceType
+from src.db.entity import AnnouncementType, AnnouncementServiceType, City
 from src.handler.general import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
 from src.handler.share.share import ShareGeneral
 from src.handler.state import ShareTripState
-from src.service import cities, time_service
+from src.service import time_service
 from src.service.announcement import AnnouncementService
+from src.service.city import CityService
 
 
 class ShareTripGeneral:
+
+    def __init__(self, city_service: CityService):
+        self.city_service = city_service
+
     async def _show_cities(self, message: Message, tg_msg: str,
-                           except_city: str = None,
+                           except_city_id: str = None,
                            with_any: bool = False):
-        cities_buttons = [[KeyboardButton(tz)] for tz in cities.all(except_city, with_any)]
+        print("Create Cities Buttons")
+        cities_buttons = [[KeyboardButton(c)] for c in self.city_service.find_all_titles(except_city_id, with_any)]
         await message.answer(
             tg_msg,
             reply_markup=ReplyKeyboardMarkup(keyboard=cities_buttons, resize_keyboard=False, one_time_keyboard=True))
@@ -27,9 +33,9 @@ class ShareTripGeneral:
 class ShareTripCallbackHandler(TelegramCallbackHandler, ShareTripGeneral):
     MARKER = marker.SHARE_TRIP
 
-    def __init__(self):
+    def __init__(self, city_service: CityService):
         TelegramCallbackHandler.__init__(self)
-        ShareTripGeneral.__init__(self)
+        ShareTripGeneral.__init__(self, city_service)
 
     async def handle_(self, callback: CallbackMeta):
         await self._show_cities(callback.original.message, msg.SHARE_TRIP_CITY_FROM)
@@ -38,16 +44,17 @@ class ShareTripCallbackHandler(TelegramCallbackHandler, ShareTripGeneral):
 
 # city from
 class ShareTripCityFromAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
-    def __init__(self, ):
+    def __init__(self, city_service: CityService):
         TelegramMessageHandler.__init__(self)
-        ShareTripGeneral.__init__(self)
+        ShareTripGeneral.__init__(self, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
-        city_from = message.text
+        city_from_name = message.text
+        city_from: City = self.city_service.find_by_name(city_from_name)
 
-        if cities.validate(city_from):
+        if city_from:
             await self._show_cities(message.original, msg.SHARE_TRIP_CITY_TO,
-                                    except_city=city_from,
+                                    except_city_id=city_from.id,
                                     with_any=True)
             await ShareTripState.waiting_for_city_to.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from)
@@ -58,21 +65,22 @@ class ShareTripCityFromAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
 
 # city to
 class ShareTripCityToAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
-    def __init__(self, ):
+    def __init__(self, city_service: CityService):
         TelegramMessageHandler.__init__(self)
-        ShareTripGeneral.__init__(self)
+        ShareTripGeneral.__init__(self, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
-        city_from = (await Dispatcher.get_current().current_state().get_data())['city_from']
-        city_to = message.text
+        city_from: City = (await Dispatcher.get_current().current_state().get_data())['city_from']
+        city_to_name = message.text
+        city_to: City = self.city_service.find_by_name(city_to_name)
 
-        if cities.validate(city_to) or city_to in cities.any():
+        if city_to:
             await message.original.answer(msg.SHARE_TRIP_SCHEDULING, reply_markup=ReplyKeyboardRemove())
             await ShareTripState.waiting_for_scheduling.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from, city_to=city_to)
         else:
             await self._show_cities(message.original, msg.SHARE_TRIP_CITY_TO,
-                                    except_city=city_from,
+                                    except_city_id=city_from.id,
                                     with_any=True)
             await ShareTripState.waiting_for_city_to.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from)
@@ -80,14 +88,14 @@ class ShareTripCityToAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
 
 # scheduling
 class ShareTripSchedulingAnswerHandler(TelegramMessageHandler, ShareTripGeneral):
-    def __init__(self, ):
+    def __init__(self, city_service: CityService):
         TelegramMessageHandler.__init__(self)
-        ShareTripGeneral.__init__(self)
+        ShareTripGeneral.__init__(self, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
         state_data: dict = await Dispatcher.get_current().current_state().get_data()
-        city_from = state_data['city_from']
-        city_to = state_data['city_to']
+        city_from: City = state_data['city_from']
+        city_to: City = state_data['city_to']
         scheduling = message.text
 
         extracted_schedule: datetime = time_service.extract_datetime(scheduling)
@@ -104,25 +112,29 @@ class ShareTripSchedulingAnswerHandler(TelegramMessageHandler, ShareTripGeneral)
 
 
 class ShareTripInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
-    def __init__(self, announcement_service: AnnouncementService):
+    def __init__(self, announcement_service: AnnouncementService, city_service: CityService):
         TelegramMessageHandler.__init__(self)
-        ShareGeneral.__init__(self, announcement_service)
+        ShareGeneral.__init__(self, announcement_service, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
         state_data: dict = await Dispatcher.get_current().current_state().get_data()
-        city_from: str = state_data['city_from']
-        city_to: str = state_data['city_to']
+        city_from: City = state_data['city_from']
+        city_to: City = state_data['city_to']
         scheduling: datetime = state_data['scheduling']
 
         info = message.text
 
         if len(info) <= INFO_SYMBOLS_LIMIT:
+            a = self.announcement_service.create(
+                user_id=message.user_id,
+                a_type=AnnouncementType.share,
+                a_service=AnnouncementServiceType.trip,
+                city_from_id=city_from.id,
+                city_to_id=city_to.id,
+                info=info,
+                scheduled=scheduling)
 
-            a = self.announcement_service.create_trip(
-                message.user_id, AnnouncementType.share,
-                AnnouncementServiceType.trip, city_from, city_to, info, scheduling)
-
-            await message.original.answer(msg.SHARE_TRIP_DONE.format(city_from, city_to, info, scheduling))
+            await message.original.answer(msg.SHARE_TRIP_DONE.format(city_from.name, city_to.name, info, scheduling))
             await Dispatcher.get_current().current_state().finish()
             await self._alert_if_match(message.original, a)
             await self._show_share_menu(message.original)

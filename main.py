@@ -1,4 +1,4 @@
-# import asyncio
+import asyncio
 
 from aiogram import Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -22,27 +22,29 @@ from src.handler.share.share_trip import ShareTripCallbackHandler, ShareTripCity
     ShareTripCityFromAnswerHandler, ShareTripSchedulingAnswerHandler, ShareTripInfoAnswerHandler
 from src.handler.state import ShareHomeState, ShareTripState, FindHomeState, FindTripState
 from src.service.announcement import AnnouncementService
-
 #### TG BOT ####
+from src.service.city import CityService
+
 bot = Bot(token=config.BOT_API_TOKEN, parse_mode=config.PARSE_MODE)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 #### SERVICES ####
 announcement_service = AnnouncementService()
+city_service = CityService()
 
 #### CALLBACK ####
 callback_router = CallbackRouter([
     MenuCallbackHandler(),
-    ShareCallbackHandler(announcement_service),
+    ShareCallbackHandler(announcement_service, city_service),
     FindCallbackHandler(announcement_service),
     MyAnnouncementsCallbackHandler(announcement_service),
     InfoCallbackHandler(),
 
-    ShareHomeCallbackHandler(),
-    ShareTripCallbackHandler(),
+    ShareHomeCallbackHandler(city_service),
+    ShareTripCallbackHandler(city_service),
 
-    FindHomeCallbackHandler(),
-    FindTripCallbackHandler(),
+    FindHomeCallbackHandler(city_service),
+    FindTripCallbackHandler(city_service),
     FindCreateCallbackHandler(announcement_service),
     FindMyAnnouncementsCallbackHandler(announcement_service),
 
@@ -53,18 +55,18 @@ callback_router = CallbackRouter([
 #### HANDLERS ####
 menu_handler = MenuHandler()
 
-find_home_city_answer_handler = FindHomeCityAnswerHandler(announcement_service)
+find_home_city_answer_handler = FindHomeCityAnswerHandler(announcement_service, city_service)
 
-share_home_post_city_answer_handler = ShareHomePostCityAnswerHandler()
-share_home_post_info_answer_handler = ShareHomePostInfoAnswerHandler(announcement_service)
+share_home_post_city_answer_handler = ShareHomePostCityAnswerHandler(city_service)
+share_home_post_info_answer_handler = ShareHomePostInfoAnswerHandler(announcement_service, city_service)
 
-share_trip_city_from_answer_handler = ShareTripCityFromAnswerHandler()
-share_trip_city_to_answer_handler = ShareTripCityToAnswerHandler()
-share_trip_scheduling_answer_handler = ShareTripSchedulingAnswerHandler()
-share_trip_info_answer_handler = ShareTripInfoAnswerHandler(announcement_service)
+share_trip_city_from_answer_handler = ShareTripCityFromAnswerHandler(city_service)
+share_trip_city_to_answer_handler = ShareTripCityToAnswerHandler(city_service)
+share_trip_scheduling_answer_handler = ShareTripSchedulingAnswerHandler(city_service)
+share_trip_info_answer_handler = ShareTripInfoAnswerHandler(announcement_service, city_service)
 
-find_trip_city_from_answer_handler = FindTripCityFromAnswerHandler()
-find_trip_city_to_answer_handler = FindTripCityToAnswerHandler(announcement_service)
+find_trip_city_from_answer_handler = FindTripCityFromAnswerHandler(city_service)
+find_trip_city_to_answer_handler = FindTripCityToAnswerHandler(announcement_service, city_service)
 
 
 #################################

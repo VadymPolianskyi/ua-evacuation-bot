@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Dispatcher
 from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup
 
@@ -21,7 +23,7 @@ class FindTripGeneral:
             reply_markup=ReplyKeyboardMarkup(keyboard=cities_buttons, resize_keyboard=False, one_time_keyboard=True))
 
     async def _show_result(self, message: Message, final_message: str, user_id: int):
-        print(f"Final message: {final_message}")
+        logging.info(f"FindTrip Final message: {final_message}")
 
         menu_keyboard = markup.create_inline_markup_([
             (msg.FIND_CREATE_BUTTON, marker.FIND_CREATE, '_'),
@@ -44,6 +46,7 @@ class FindTripCallbackHandler(TelegramCallbackHandler, FindTripGeneral):
         FindTripGeneral.__init__(self, city_service)
 
     async def handle_(self, callback: CallbackMeta):
+        logging.info(f"FindTripCallbackHandler.handle for User({callback.user_id})")
         await self._show_cities(callback.original.message, msg.FIND_TRIP_CITY_FROM)
         await FindTripState.waiting_for_city_from.set()
 
@@ -54,7 +57,9 @@ class FindTripCityFromAnswerHandler(TelegramMessageHandler, FindTripGeneral):
         FindTripGeneral.__init__(self, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
+        logging.info(f"FindTripCityFromAnswerHandler.handle for User({message.user_id})")
         city_from_name = message.text
+        logging.debug(f"Input city FROM: {city_from_name}")
         city_from = self.city_service.find_by_name(city_from_name)
 
         if city_from and city_from.id != self.city_service.ANY_ID:
@@ -62,6 +67,7 @@ class FindTripCityFromAnswerHandler(TelegramMessageHandler, FindTripGeneral):
             await FindTripState.waiting_for_city_to.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from)
         else:
+            logging.info(f"Writing city FROM again for User({message.user_id})")
             await self._show_cities(message.original, msg.FIND_TRIP_CITY_FROM)
             await FindTripState.waiting_for_city_from.set()
 
@@ -73,8 +79,11 @@ class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral):
         self.announcement_service = announcement_service
 
     async def handle_(self, message: MessageMeta, *args):
+        logging.info(f"FindTripCityToAnswerHandler.handle for User({message.user_id})")
+
         city_from = (await Dispatcher.get_current().current_state().get_data())['city_from']
         city_to_name = message.text
+        logging.debug(f"Input city TO: {city_to_name}")
         city_to: City = self.city_service.find_by_name(city_to_name)
 
         if city_to:
@@ -89,6 +98,8 @@ class FindTripCityToAnswerHandler(TelegramMessageHandler, FindTripGeneral):
             await Dispatcher.get_current().current_state().update_data(
                 a_service=AnnouncementServiceType.trip, city_from=city_from, city_to=city_to)
         else:
+            logging.info(f"Writing city TO again for User({message.user_id})")
+
             await self._show_cities(message.original, msg.FIND_TRIP_CITY_TO, with_any=True)
             await FindTripState.waiting_for_city_to.set()
             await Dispatcher.get_current().current_state().update_data(city_from=city_from)

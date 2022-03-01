@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Dispatcher
 from aiogram.types import KeyboardButton, Message, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
@@ -33,6 +35,7 @@ class ShareHomeCallbackHandler(TelegramCallbackHandler, ShareHomeGeneral):
         ShareHomeGeneral.__init__(self, city_service)
 
     async def handle_(self, callback: CallbackMeta):
+        logging.info(f"ShareHomeCallbackHandler.handle for User({callback.user_id})")
         await self._show_cities(callback.original.message)
 
 
@@ -42,7 +45,9 @@ class ShareHomePostCityAnswerHandler(TelegramMessageHandler, ShareHomeGeneral):
         ShareHomeGeneral.__init__(self, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
+        logging.info(f"ShareHomePostCityAnswerHandler.handle for User({message.user_id})")
         city_name = message.text
+        logging.debug(f"Input city: {city_name}")
         city: City = self.city_service.find_by_name(city_name)
 
         if city:
@@ -60,6 +65,7 @@ class ShareHomePostInfoAnswerHandler(TelegramMessageHandler, ShareGeneral):
         ShareGeneral.__init__(self, announcement_service, city_service)
 
     async def handle_(self, message: MessageMeta, *args):
+        logging.info(f"ShareHomePostInfoAnswerHandler.handle for User({message.user_id})")
         info = message.text
         city: City = (await Dispatcher.get_current().current_state().get_data())['city']
 

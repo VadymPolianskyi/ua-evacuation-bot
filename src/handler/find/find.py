@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Dispatcher
 from aiogram.types import Message
 
@@ -28,7 +30,7 @@ class FindGeneral:
                 [f"{i + 1}. {a.to_str()}" for i, a in enumerate(user_announcements_find)])
 
             before_text = msg.FIND_BEFORE.format(announcements_find_str)
-
+        logging.info(f"Before text: {before_text}")
         await message.answer(before_text + msg.FIND, reply_markup=menu_keyboard, disable_web_page_preview=True)
 
 
@@ -40,5 +42,6 @@ class FindCallbackHandler(TelegramCallbackHandler, FindGeneral):
         FindGeneral.__init__(self, announcement_service)
 
     async def handle_(self, callback: CallbackMeta):
+        logging.info(f"FindCallbackHandler.handle for User({callback.user_id})")
         await Dispatcher.get_current().current_state().finish()
         await self._show_find_menu(callback.original.message, callback.user_id)

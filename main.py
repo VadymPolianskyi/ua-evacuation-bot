@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 from aiogram import Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -24,10 +25,12 @@ from src.handler.share.share_trip import ShareTripCallbackHandler, ShareTripCity
     ShareTripSchedulingAnswerCallbackHandler
 from src.handler.state import ShareHomeState, ShareTripState, FindHomeState, FindTripState
 from src.service.announcement import AnnouncementService
-#### TG BOT ####
 from src.service.city import CityService
 from src.service.user import UserService
 
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+
+#### TG BOT ####
 bot = Bot(token=config.BOT_API_TOKEN, parse_mode=config.PARSE_MODE)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -158,18 +161,18 @@ async def on_startup(_):
 
 
 async def on_shutdown(dp):
-    print('Shutting down..')
+    logging.info('Shutting down..')
 
     await bot.delete_webhook()
 
     await dp.storage.close()
     await dp.storage.wait_closed()
 
-    print('Bye!')
+    logging.info('Bye!')
 
 
 if __name__ == "__main__":
-    print("Lanuch")
+    logging.info("Lanuch")
 
     executor.start_webhook(
         dispatcher=dp,

@@ -1,3 +1,5 @@
+import logging
+
 from aiogram import Dispatcher
 from aiogram.types import ReplyKeyboardRemove
 
@@ -17,18 +19,18 @@ class FindCreateCallbackHandler(TelegramCallbackHandler, FindGeneral):
 
     async def handle_(self, callback: CallbackMeta):
         state_data: dict = await Dispatcher.get_current().current_state().get_data()
-        print(f"User({callback.user_id}): create Find Notificaiton")
+        logging.info(f"User({callback.user_id}): create Find Notificaiton")
         a_service = state_data['a_service']
-        print(f"User({callback.user_id}): service = {a_service.value}")
+        logging.debug(f"User({callback.user_id}): service = {a_service.value}")
 
         if a_service == AnnouncementServiceType.home:
             city: City = state_data['city']
-            print(f"User({callback.user_id}): city = {city.name}")
+            logging.debug(f"User({callback.user_id}): city = {city.name}")
 
             already_created = self.announcement_service.find_by_city(city.id, AnnouncementType.find,
                                                                      AnnouncementServiceType.home)
             created_by_user = [a for a in already_created if a.user_id == callback.user_id]
-            print(f"User({callback.user_id}): created_by_user = {created_by_user}")
+            logging.info(f"User({callback.user_id}): created_by_user = {created_by_user}")
 
             if not created_by_user:
                 self.announcement_service.create(callback.user_id, AnnouncementType.find,
@@ -36,7 +38,7 @@ class FindCreateCallbackHandler(TelegramCallbackHandler, FindGeneral):
         else:
             city_from: City = state_data['city_from']
             city_to: City = state_data['city_to']
-            print(f"User({callback.user_id}): city_from = {city_from.name}, city_to = {city_to.name}")
+            logging.debug(f"User({callback.user_id}): city_from = {city_from.name}, city_to = {city_to.name}")
 
             already_created = self.announcement_service.find_by_city(
                 city_from_id=city_from.id,
@@ -44,12 +46,12 @@ class FindCreateCallbackHandler(TelegramCallbackHandler, FindGeneral):
                 a_service=AnnouncementServiceType.trip,
                 city_to_id=city_to.id)
             created_by_user = [a for a in already_created if a.user_id == callback.user_id]
-            print(f"User({callback.user_id}): created_by_user = {created_by_user}")
+            logging.info(f"User({callback.user_id}): created_by_user = {created_by_user}")
 
             if not created_by_user:
                 self.announcement_service.create(callback.user_id, AnnouncementType.find,
                                                  AnnouncementServiceType.trip, city_from.id, city_to.id)
-        print(f"User({callback.user_id}): notification creating is finished")
+        logging.info(f"User({callback.user_id}): notification creating is finished")
 
         await callback.original.message.answer(msg.FIND_CREATE_DONE, reply_markup=ReplyKeyboardRemove())
 

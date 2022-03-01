@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 from typing import Optional
 from zoneinfo import ZoneInfo
+import logging
 
 UA_TZ = "Europe/Kiev"
 
@@ -33,7 +34,7 @@ def extract_datetime(date_time_str: str) -> Optional[datetime]:
     try:
         extracted = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
     except ValueError:
-        print(f"Error when converting '{date_time_str}' to datetime")
+        logging.error(f"Error when converting '{date_time_str}' to datetime")
         extracted = extract_from_time(date_time_str)
 
     return extracted

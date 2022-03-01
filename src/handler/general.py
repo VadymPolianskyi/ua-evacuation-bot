@@ -1,4 +1,5 @@
 import json
+import logging
 from datetime import datetime
 from json import JSONDecodeError
 
@@ -31,16 +32,16 @@ class CallbackMeta:
 class TelegramMessageHandler:
 
     def __init__(self):
-        print(f'Creating {self.__class__.__name__}...')
+        logging.debug(f'Creating {self.__class__.__name__}...')
 
     async def handle(self, message: Message, *args):
         user_id: int = message.from_user.id
         msg_time: datetime = time_service.now()
-        print(f"Message '{message.text}' in chat({user_id}) at '{msg_time}'. Args: {','.join(args)}")
+        logging.info(f"Message '{message.text}' in chat({user_id}) at '{msg_time}'. Args: {','.join(args)}")
         try:
             await self.handle_(MessageMeta(message, msg_time), *args)
         except Exception as e:
-            print(e)
+            logging.error(e)
             await message.answer(msg.ERROR_BASIC)
 
     async def handle_(self, message: MessageMeta, *args):
@@ -50,17 +51,17 @@ class TelegramMessageHandler:
 
 class TelegramCallbackHandler:
     def __init__(self):
-        print(f'Creating {self.__class__.__name__}...')
+        logging.debug(f'Creating {self.__class__.__name__}...')
 
     async def handle(self, call: CallbackQuery):
         user_id: int = call.from_user.id
         callback_time: datetime = time_service.now()
-        print(f"Callback with data '{call.data}' in chat({user_id}) at '{callback_time}'")
+        logging.info(f"Callback with data '{call.data}' in chat({user_id}) at '{callback_time}'")
         try:
             await call.bot.delete_message(chat_id=user_id, message_id=call.message.message_id)
             await self.handle_(CallbackMeta(call, time=callback_time))
         except Exception as e:
-            print(e)
+            logging.error(e)
             await call.message.answer(msg.ERROR_BASIC)
 
     async def handle_(self, call: CallbackMeta):

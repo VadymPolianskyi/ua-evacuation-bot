@@ -7,6 +7,7 @@ from src.model import Announcement
 from src.service import markup
 from src.service.announcement import AnnouncementService
 from src.service.city import CityService
+import logging
 
 
 class ShareGeneral:
@@ -25,7 +26,7 @@ class ShareGeneral:
         await message.answer(msg.SHARE, reply_markup=menu_keyboard, disable_web_page_preview=True)
 
     async def _alert_if_match(self, message: Message, a: Announcement):
-        print(f"Alert if find subscriptions for {a.to_str()}")
+        logging.info(f"Alert if find subscriptions for {a.to_str()}")
         citi_to_id = a.city_to.id if a.city_to else None
 
         announcements_find = self.announcement_service.find_by_city(
@@ -45,4 +46,5 @@ class ShareCallbackHandler(TelegramCallbackHandler, ShareGeneral):
         ShareGeneral.__init__(self, announcement_service, city_service)
 
     async def handle_(self, callback: CallbackMeta):
+        logging.info(f"ShareCallbackHandler.handle for User({callback.user_id})")
         await self._show_share_menu(callback.original.message)

@@ -1,3 +1,5 @@
+import logging
+
 from src.config import msg, marker, limits
 from src.db.entity import AnnouncementType, AnnouncementServiceType
 from src.handler.general import TelegramCallbackHandler, CallbackMeta
@@ -15,11 +17,15 @@ class MyAnnouncementsCallbackHandler(TelegramCallbackHandler):
         self.announcement_service = announcement_service
 
     async def handle_(self, callback: CallbackMeta):
+        logging.info(f"MyAnnouncementsCallbackHandler.handle for User({callback.user_id})")
+
         user_announcements = self.announcement_service.find_by_user(callback.user_id, AnnouncementType.share)
+
+        logging.info(f"Found {len(user_announcements)} of User({callback.user_id})")
 
         buttons = list()
         announcements = list()
-        print(f"Create buttons for User({callback.user_id}) 'MY' menu")
+        logging.info(f"Create buttons for User({callback.user_id}) 'MY' menu")
         for i, a in enumerate(user_announcements):
             i = i + 1
             button_name = f'{msg.DELETE_SIGN} {i}. {a.a_service.value} - {a.city()}'
@@ -27,7 +33,7 @@ class MyAnnouncementsCallbackHandler(TelegramCallbackHandler):
             buttons.append(element)
             announcements.append(f"{i}. {a.to_str()}")
 
-        print("Buttons 'MY' menu created")
+        logging.info("Buttons 'MY' menu created")
         buttons.append((msg.BACK_BUTTON, marker.MENU, '_'))
 
         announcements_str: str = "\n" + "\n\n".join(announcements)
@@ -50,6 +56,7 @@ class DeleteAnnouncementBeforeVoteCallbackHandler(TelegramCallbackHandler):
         self.announcement_service = announcement_service
 
     async def handle_(self, callback: CallbackMeta):
+        logging.info(f"DeleteAnnouncementBeforeVoteCallbackHandler.handle for User({callback.user_id})")
         input_data: str = callback.payload[self.MARKER]
 
         event = self.announcement_service.find(input_data)
@@ -67,6 +74,7 @@ class DeleteEventAfterVoteCallbackHandler(TelegramCallbackHandler, MenuGeneral):
         self.announcement_service = announcement_service
 
     async def handle_(self, callback: CallbackMeta):
+        logging.info(f"DeleteEventAfterVoteCallbackHandler.handle for User({callback.user_id})")
         vote_result: str = callback.payload[self.MARKER]
 
         if vote_result != EMPTY_VOTE_RESULT:

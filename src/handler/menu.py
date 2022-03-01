@@ -1,3 +1,5 @@
+import logging
+
 from aiogram.types import Message
 
 from src.config import msg, marker
@@ -27,6 +29,7 @@ class MenuHandler(TelegramMessageHandler, MenuGeneral):
         MenuGeneral.__init__(self)
 
     async def handle_(self, message: MessageMeta, *args):
+        logging.info(f"MenuHandler.handle for User({message.user_id})")
         await self._show_menu(message.original)
 
 
@@ -38,4 +41,5 @@ class MenuCallbackHandler(TelegramCallbackHandler, MenuGeneral):
         MenuGeneral.__init__(self)
 
     async def handle_(self, call: CallbackMeta):
+        logging.info(f"MenuCallbackHandler.handle for User({call.user_id})")
         await self._show_menu(call.original.message, call.user_id)

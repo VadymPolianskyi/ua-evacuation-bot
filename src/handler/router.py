@@ -1,4 +1,5 @@
 import json
+import logging
 
 from aiogram.types import CallbackQuery
 
@@ -16,6 +17,6 @@ class CallbackRouter:
 
         for key in payload.keys():
             if key in self.callback_handler:
-                print(f"Found route for callback '{key}' from user({call.from_user.id})")
+                logging.info(f"Found route for callback '{key}' from user({call.from_user.id})")
                 await self.callback_handler[key].handle(call)
                 break

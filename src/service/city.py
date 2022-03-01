@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 
 from cachetools import cached, TTLCache
@@ -20,7 +21,7 @@ class CityService:
 
     @cached(cache=TTLCache(5, 5))
     def find_all(self, except_of_id: int = None, with_any: bool = False) -> list:
-        print(f"Find all Cities except {except_of_id}")
+        logging.info(f"Find all Cities except {except_of_id}")
         result = [c for c in self.dao.find_all() if c.id != except_of_id]
         if with_any and except_of_id == self.ANY_ID:
             result = [self.find_any()] + result
@@ -29,9 +30,10 @@ class CityService:
     @cached(cache=TTLCache(5, 5))
     def find(self, city_id: int):
         if city_id:
-            print(f"Find City({city_id})")
+            logging.info(f"Find City({city_id})")
             return self.dao.find(city_id)
         else:
+            logging.warning(f"City({city_id}) is not found...")
             return None
 
     @cached(cache=TTLCache(5, 5))
@@ -40,5 +42,5 @@ class CityService:
 
     @cached(cache=TTLCache(5, 5))
     def find_by_name(self, city_name: str) -> Optional[City]:
-        print(f"Find by name City({city_name})")
+        logging.info(f"Find by name City({city_name})")
         return self.dao.find_by_name(city_name)

@@ -28,7 +28,7 @@ from src.service.announcement import AnnouncementService
 from src.service.city import CityService
 from src.service.user import UserService
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.getLevelName(config.LOG_LEVEL))
 
 #### TG BOT ####
 bot = Bot(token=config.BOT_API_TOKEN, parse_mode=config.PARSE_MODE)

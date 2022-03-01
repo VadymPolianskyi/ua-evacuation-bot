@@ -19,3 +19,5 @@ PARSE_MODE = "Markdown"
 
 DB_TABLE_CITY = os.getenv("DB_TABLE_CITY")
 DB_TABLE_USER = os.getenv("DB_TABLE_USER")
+
+LOG_LEVEL = os.getenv("LOG_LEVEL")

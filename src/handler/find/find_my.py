@@ -31,7 +31,7 @@ class FindMyAnnouncementsCallbackHandler(TelegramCallbackHandler):
             announcements.append(f"{i}. {a.to_str()}")
 
         logging.info("Buttons 'FIND_MY' menu created")
-        buttons.append((msg.BACK_BUTTON, marker.MENU, '_'))
+        buttons.append((msg.BACK_BUTTON, marker.FIND, '_'))
 
         announcements_str: str = "\n" + "\n\n".join(announcements)
 

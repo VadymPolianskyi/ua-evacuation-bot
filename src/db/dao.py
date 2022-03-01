@@ -70,15 +70,15 @@ class AnnouncementDao(Dao):
     def __init__(self):
         self.__table = config.DB_TABLE_ANNOUNCEMENT
 
-    def save(self, ann: AnnouncementEntity):
+    def save(self, ann: AnnouncementEntity, approved=True):
         query = f"""
         INSERT INTO `{self.__table}` 
-        (`id`, `user_id`, `a_type`, `a_service`, `city_from_id`, `city_to_id`, `info`, `scheduled`) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+        (`id`, `user_id`, `a_type`, `a_service`, `city_from_id`, `city_to_id`, `info`, `scheduled`, `approved`) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
         self._execute(query,
                       (ann.id, ann.user_id, ann.a_type.name, ann.a_service.name,
-                       ann.city_from_id, ann.city_to_id, ann.info, ann.scheduled))
+                       ann.city_from_id, ann.city_to_id, ann.info, ann.scheduled, approved))
 
     def find(self, announcement_id: str) -> Optional[AnnouncementEntity]:
         print(f"Find Announcement({announcement_id})")
@@ -88,20 +88,20 @@ class AnnouncementDao(Dao):
 
     def delete(self, announcement_id: str):
         print(f"Delete Announcement({announcement_id})")
-        query = f'DELETE FROM `{self.__table}` WHERE id=%s'
-        self._execute(query, announcement_id)
+        query = f'UPDATE `{self.__table}` SET approved = %s WHERE id=%s;'
+        self._execute(query, (False, announcement_id))
 
-    def find_by_user(self, user_id: int) -> list:
+    def find_by_user(self, user_id: int, approved=True) -> list:
         print(f"Select all Announcements for User({user_id})")
-        query = f'SELECT * FROM `{self.__table}` WHERE user_id=%s;'
-        result = self._select_list(query, user_id)
+        query = f'SELECT * FROM `{self.__table}` WHERE user_id=%s and approved=%s;'
+        result = self._select_list(query, (user_id, approved))
         print(f"Selected {len(result)} Announcements for User({user_id})")
         return [AnnouncementEntity.from_dict(r) for r in result]
 
-    def find_by_city(self, city_from_id: int) -> list:
+    def find_by_city(self, city_from_id: int, approved=True) -> list:
         print(f"Select all Announcements for city {city_from_id}")
-        query = f'SELECT * FROM `{self.__table}` WHERE city_from_id=%s;'
-        result = self._select_list(query, city_from_id)
+        query = f'SELECT * FROM `{self.__table}` WHERE city_from_id=%s and approved=%s;'
+        result = self._select_list(query, (city_from_id, approved))
         print(f"Selected {len(result)} Announcements in city {city_from_id}")
         return [AnnouncementEntity.from_dict(r) for r in result]
 
@@ -111,10 +111,6 @@ class AnnouncementDao(Dao):
         result = self._select_list(query, ())
         print(f"Selected {len(result)} Announcements")
         return [AnnouncementEntity.from_dict(r) for r in result]
-
-    def update(self, a: AnnouncementEntity):
-        query = f'UPDATE `{self.__table}` SET city_from_id = %s, city_to_id = %s WHERE id=%s;'
-        self._execute(query, (a.city_from_id, a.city_to_id, a.id))
 
 
 class CityDao(Dao):

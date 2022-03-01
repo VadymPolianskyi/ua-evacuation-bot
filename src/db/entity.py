@@ -43,9 +43,6 @@ class AnnouncementEntity:
                  a_service: AnnouncementServiceType,
                  city_from_id: int,
 
-                 city_a: str = None,
-                 city_b: str = None,
-
                  info: str = None,
                  id: str = None,
                  scheduled: datetime = None,
@@ -56,8 +53,6 @@ class AnnouncementEntity:
         self.user_id: int = user_id
         self.a_type: AnnouncementType = a_type
         self.a_service: AnnouncementServiceType = a_service
-        self.city_a = city_a
-        self.city_b = city_b
         self.city_from_id: int = city_from_id
         self.city_to_id: int = city_to_id
         self.info: str = info
@@ -80,8 +75,6 @@ class AnnouncementEntity:
                                   a_service=a_service,
                                   city_from_id=r['city_from_id'],
                                   city_to_id=r['city_to_id'],
-                                  city_a=r['city_a'],
-                                  city_b=r['city_b'],
                                   info=r['info'],
                                   scheduled=r['scheduled'],
                                   created=r['created']

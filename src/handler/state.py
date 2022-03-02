@@ -6,6 +6,11 @@ class ShareHomeState(StatesGroup):
     waiting_for_info = State()
 
 
+class ShareHelpState(StatesGroup):
+    waiting_for_city = State()
+    waiting_for_info = State()
+
+
 class ShareTripState(StatesGroup):
     waiting_for_city_from = State()
     waiting_for_city_to = State()
@@ -14,6 +19,10 @@ class ShareTripState(StatesGroup):
 
 
 class FindHomeState(StatesGroup):
+    waiting_for_city = State()
+
+
+class FindHelpState(StatesGroup):
     waiting_for_city = State()
 
 

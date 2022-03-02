@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from enum import Enum
 
-from src.config.msg import TRIP_TYPE_NAME, HOME_TYPE_NAME
+from src.config.msg import TRIP_TYPE_NAME, HOME_TYPE_NAME, HELP_TYPE_NAME
 
 
 class AnnouncementType(Enum):
@@ -13,6 +13,7 @@ class AnnouncementType(Enum):
 class AnnouncementServiceType(Enum):
     home = HOME_TYPE_NAME
     trip = TRIP_TYPE_NAME
+    help = HELP_TYPE_NAME
 
 
 class User:
@@ -67,8 +68,13 @@ class AnnouncementEntity:
     @classmethod
     def from_dict(cls, r):
         a_type = AnnouncementType.share if r['a_type'] == AnnouncementType.share.name else AnnouncementType.find
-        a_service = AnnouncementServiceType.home if \
-            r['a_service'] == AnnouncementServiceType.home.name else AnnouncementServiceType.trip
+        if r['a_service'] == AnnouncementServiceType.home.name:
+            a_service = AnnouncementServiceType.home
+        elif r['a_service'] == AnnouncementServiceType.trip.name:
+            a_service = AnnouncementServiceType.trip
+        else:
+            a_service = AnnouncementServiceType.help
+
         return AnnouncementEntity(id=r['id'],
                                   user_id=r['user_id'],
                                   a_type=a_type,

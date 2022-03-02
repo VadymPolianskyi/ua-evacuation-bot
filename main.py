@@ -8,6 +8,7 @@ from aiogram.types import Message
 from src.config import config
 from src.handler.find.find import FindCallbackHandler
 from src.handler.find.find_create import FindCreateCallbackHandler
+from src.handler.find.find_help import FindHelpCallbackHandler, FindHelpCityAnswerHandler
 from src.handler.find.find_home import FindHomeCallbackHandler, FindHomeCityAnswerHandler
 from src.handler.find.find_my import FindMyAnnouncementsCallbackHandler
 from src.handler.find.find_trip import FindTripCallbackHandler, FindTripCityFromAnswerHandler, \
@@ -18,12 +19,15 @@ from src.handler.my import MyAnnouncementsCallbackHandler, DeleteAnnouncementBef
     DeleteEventAfterVoteCallbackHandler
 from src.handler.router import CallbackRouter
 from src.handler.share.share import ShareCallbackHandler
+from src.handler.share.share_help import ShareHelpCallbackHandler, ShareHelpPostCityAnswerHandler, \
+    ShareHelpPostInfoAnswerHandler
 from src.handler.share.share_home import ShareHomeCallbackHandler, ShareHomePostInfoAnswerHandler
 from src.handler.share.share_home import ShareHomePostCityAnswerHandler
 from src.handler.share.share_trip import ShareTripCallbackHandler, ShareTripCityToAnswerHandler, \
     ShareTripCityFromAnswerHandler, ShareTripSchedulingAnswerHandler, ShareTripInfoAnswerHandler, \
     ShareTripSchedulingAnswerCallbackHandler
-from src.handler.state import ShareHomeState, ShareTripState, FindHomeState, FindTripState
+from src.handler.state import ShareHomeState, ShareTripState, FindHomeState, FindTripState, ShareHelpState, \
+    FindHelpState
 from src.service.announcement import AnnouncementService
 from src.service.city import CityService
 from src.service.user import UserService
@@ -50,9 +54,12 @@ callback_router = CallbackRouter([
     ShareHomeCallbackHandler(city_service),
     ShareTripCallbackHandler(city_service),
     ShareTripSchedulingAnswerCallbackHandler(),
+    ShareHelpCallbackHandler(city_service),
 
     FindHomeCallbackHandler(city_service),
     FindTripCallbackHandler(city_service),
+    FindHelpCallbackHandler(city_service),
+
     FindCreateCallbackHandler(announcement_service),
     FindMyAnnouncementsCallbackHandler(announcement_service),
 
@@ -75,6 +82,11 @@ share_trip_info_answer_handler = ShareTripInfoAnswerHandler(announcement_service
 
 find_trip_city_from_answer_handler = FindTripCityFromAnswerHandler(city_service)
 find_trip_city_to_answer_handler = FindTripCityToAnswerHandler(announcement_service, city_service)
+
+share_help_post_city_answer_handler = ShareHelpPostCityAnswerHandler(city_service)
+share_help_post_info_answer_handler = ShareHelpPostInfoAnswerHandler(announcement_service, city_service)
+
+find_help_city_answer_handler = FindHelpCityAnswerHandler(announcement_service, city_service)
 
 
 #################################
@@ -123,11 +135,30 @@ async def share_trip_info_answer(message):
     await share_trip_info_answer_handler.handle(message)
 
 
+# share help
+
+@dp.message_handler(state=ShareHelpState.waiting_for_city)
+async def share_help_city_answer(message):
+    await share_help_post_city_answer_handler.handle(message)
+
+
+@dp.message_handler(state=ShareHelpState.waiting_for_info)
+async def share_help_info_answer(message):
+    await share_help_post_info_answer_handler.handle(message)
+
+
 # find home
 
 @dp.message_handler(state=FindHomeState.waiting_for_city)
 async def find_home_city_answer(message):
     await find_home_city_answer_handler.handle(message)
+
+
+# find help
+
+@dp.message_handler(state=FindHelpState.waiting_for_city)
+async def find_help_city_answer(message):
+    await find_help_city_answer_handler.handle(message)
 
 
 # find trip

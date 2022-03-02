@@ -51,7 +51,9 @@ class AnnouncementService:
                      city_to_id=None):
         logging.debug(f"Find Announcements(a_type={a_type},city_from_id={city_from_id},city_to_id={city_to_id})")
 
-        result = [self.__to_model(ae) for ae in self.dao.find_by_city(city_from_id) if
+        all_selected = self.dao.find_by_city(city_from_id)
+
+        result = [self.__to_model(ae) for ae in all_selected if
                   self.__is_needed_trip_announcement(ae, a_type, a_service, city_to_id)]
         logging.info(f"Found {len(result)}: a_type={a_type}, city_from_id={city_from_id}, city_to_id={city_to_id})")
         return result
@@ -63,7 +65,7 @@ class AnnouncementService:
                              or a.city_to_id == self.cities.ANY_ID or city_to_id == self.cities.ANY_ID)
         if result and a.scheduled:
             result = result + time_service.validate(a.scheduled)
-        logging.debug(f"Is needed = {result}: "
+        logging.debug(f"Is needed = {result}: {a.to_str()}| "
                       f"Announcement(a_type={a_type}, a_service={a_service}, city_to_id={city_to_id})")
         return result
 

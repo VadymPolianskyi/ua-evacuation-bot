@@ -29,15 +29,17 @@ class Announcement:
         self.created: datetime = created
 
     def city(self) -> str:
-        if self.a_service is AnnouncementServiceType.home:
-            return self.city_from.name
-        else:
+        if self.a_service is AnnouncementServiceType.trip:
             return self.city_from.name + " - " + self.city_to.name
+        else:
+            return self.city_from.name
 
     def to_str(self):
         if self.a_type == AnnouncementType.share:
             if self.a_service == AnnouncementServiceType.home:
                 return f"Житло 🏠 `{self.city_from.name}`\nІнформація: {self.info}"
+            elif self.a_service == AnnouncementServiceType.help:
+                return f"Допомога 🤲 `{self.city_from.name}`\nІнформація: {self.info}"
             else:
                 time = self.scheduled.strftime("%Y-%m-%d, %H:%M") if self.scheduled else msg.REGULAR
                 return f"Транспорт 🚗 `{self.city_from.name}` - `{self.city_to.name}`\n" \
@@ -46,6 +48,8 @@ class Announcement:
         else:
             if self.a_service == AnnouncementServiceType.home:
                 return f"Житло 🏠 `{self.city_from.name}`"
+            elif self.a_service == AnnouncementServiceType.help:
+                return f"Допомога 🤲 `{self.city_from.name}`"
             else:
                 return f"Транспорт 🚗 `{self.city_from.name}` - `{self.city_to.name}`"
 

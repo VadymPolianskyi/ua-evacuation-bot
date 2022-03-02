@@ -20,6 +20,7 @@ class ShareGeneral:
         menu_keyboard = markup.create_inline_markup_([
             (msg.SHARE_HOME_BUTTON, marker.SHARE_HOME, '_'),
             (msg.SHARE_TRIP_BUTTON, marker.SHARE_TRIP, '_'),
+            (msg.SHARE_HELP_BUTTON, marker.SHARE_HELP, '_'),
             (msg.BACK_BUTTON, marker.MENU, '_')
         ])
 

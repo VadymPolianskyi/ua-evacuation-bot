@@ -63,8 +63,8 @@ class AnnouncementService:
         result = result and a.a_service == a_service
         result = result and (city_to_id is None or a.city_to_id == city_to_id
                              or a.city_to_id == self.cities.ANY_ID or city_to_id == self.cities.ANY_ID)
-        if result and a.scheduled:
-            result = result + time_service.validate(a.scheduled)
+        if result and a.scheduled is not None:
+            result = result and time_service.validate(a.scheduled)
         logging.debug(f"Is needed = {result}: {a.to_str()}| "
                       f"Announcement(a_type={a_type}, a_service={a_service}, city_to_id={city_to_id})")
         return result

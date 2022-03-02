@@ -32,7 +32,8 @@ MENU = """
 INFO = """
 ❗Корисні ресурси:
 
-- [Агрегована iнвофмацiя](https://docs.google.com/document/d/1ZCxrK4520gSGiGy4Cvqbzzn6TkB02j85XlGc5J5cFrQ/mobilebasic?fbclid=IwAR2H3kUQvBVGuXwi1EimKQu3zfu4s8mO8smhU5PozgKrtG-GC48bjCtgYCc#h.x9logjleyhsb)
+- [Агрегована iнвофмацiя](https://viyna.net/)
+- [Агрегована iнвофмацiя 2](https://docs.google.com/document/d/1ZCxrK4520gSGiGy4Cvqbzzn6TkB02j85XlGc5J5cFrQ/mobilebasic?fbclid=IwAR2H3kUQvBVGuXwi1EimKQu3zfu4s8mO8smhU5PozgKrtG-GC48bjCtgYCc#h.x9logjleyhsb)
 
 Житло 🏠
 - [Прихисток](https://prykhystok.in.ua/)
@@ -52,6 +53,11 @@ INFO = """
 - [Список водіїв](https://docs.google.com/spreadsheets/d/13lT4ja1qVoWKMAVaxApLq_wpx7YYHKLdzJbPYhA46GA/htmlview?fbclid=IwAR33tCPlOZh93OlBuvks8nu6nnKH70DNmGzBUar6r5Udx08mjkuI_Eq2H04%23gid%3D0#)
 - [Coordination Ukraine Road](https://t.me/+g_QZESG1yuMwZThi)
 - [Drivers UA border](https://t.me/+CB4Y-s4O8kM4Yzcy)
+- [Документ, що постійно оновлюється за станом черг на кордоні](https://docs.google.com/spreadsheets/d/e/2PACX-1vTmKNAxZn2cPpBqPHnRx9Hc_GPzfi7U92h05hkNuES6pA8l7IcbfdRELMkTBWGcBFoRkUdwlnfX889X/pubhtml?gid=0&single=true&fbclid=IwAR1qTqmfhHYDYFB_N14kCXweiK3BWVGzSfIYlpnD1UhYU33c-Tm0LJQYSuw)
+- [Перетин кордону](https://ukraineisforever.notion.site/56e00112898a418a98b1491725aef0d4)
+- [Інформація для тих вимушений поїхати з України](https://helpukriane.notion.site/helpukriane/34c245d9de8f4438b0c7e92bf1267080)
+- @ukraineborder
+- @vodiivolonterylviv
 - @pomoc2022
 - @UkrzalInfo
 - @perevezite

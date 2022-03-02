@@ -97,7 +97,7 @@ INFO = """
 - [Миколаїв](https://t.me/+isy_Cw5MrptmZjlk) 
 - [Львів](https://t.me/+UNdwIrUYEBgwOWE8) 
 - [Тернопіль](https://t.me/+HK4nfvMpAeM1MWZk) 
-- [Кіровоград](https://t.me/+z5TkEVbqiatkOGE0) )
+- [Кіровоград](https://t.me/+z5TkEVbqiatkOGE0)
 - [Біла Церква](https://t.me/+A4vJpMa-iqY3NzJi)
 - [Харьків](https://t.me/+vSsvEw-pfNA4NDdi)
 - [Кривий Ріг](https://t.me/+SguKJv2dQGRkM2Zk)

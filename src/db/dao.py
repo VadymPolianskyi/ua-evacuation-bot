@@ -1,10 +1,11 @@
+import datetime
 import logging
 from typing import Optional
 
 import pymysql
 
 from src.config import config
-from src.db.entity import AnnouncementEntity, City, User
+from src.db.entity import AnnouncementEntity, City, User, AnnouncementType
 
 
 def create_connection():
@@ -114,6 +115,15 @@ class AnnouncementDao(Dao):
         logging.debug(f"Selected {len(result)} Announcements")
         return [AnnouncementEntity.from_dict(r) for r in result]
 
+    def count(self, a_type: AnnouncementType, from_date: datetime.date = None):
+        logging.debug(f"Find Announcements({a_type.name}) count from date - {from_date})")
+        from_date_condition = "AND created > %s" if from_date else ""
+        from_date_parameters: tuple = (a_type, from_date) if from_date else (a_type.name)
+
+        query = f'SELECT count(*) as res FROM `{self.__table}` WHERE a_type=%s {from_date_condition} ;'
+        r = self._select_one(query, from_date_parameters)
+        return r['res'] if r else None
+
 
 class CityDao(Dao):
     def __init__(self):
@@ -163,3 +173,12 @@ class UserDao(Dao):
         query = f'SELECT * FROM `{self.__table}` WHERE id=%s;'
         r = self._select_one(query, (user_id))
         return User.from_dict(r) if r else None
+
+    def count(self, from_date: datetime.date = None):
+        logging.debug(f"Find Users count from date - {from_date})")
+        from_date_condition = "WHERE created > %s" if from_date else ""
+        from_date_parameters: tuple = (from_date) if from_date else ()
+
+        query = f'SELECT count(*) as res FROM `{self.__table}` {from_date_condition} ;'
+        r = self._select_one(query, from_date_parameters)
+        return r['res'] if r else None

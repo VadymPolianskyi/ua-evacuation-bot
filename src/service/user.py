@@ -6,6 +6,8 @@ from src.db.dao import UserDao
 from src.db.entity import User
 import logging
 
+from src.service import time_service
+
 
 class UserService:
     def __init__(self):
@@ -24,3 +26,10 @@ class UserService:
         u = User(user_id)
         self.dao.save(u)
         return u
+
+    @cached(cache=TTLCache(1, 1))
+    def count_last24_users(self):
+        dt = time_service.minus(dt=time_service.now(), hours=24)
+        todays_users = self.dao.count(dt)
+        logging.info(f"Today's users - {todays_users}")
+        return todays_users

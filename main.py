@@ -45,7 +45,7 @@ user_service = UserService()
 
 #### CALLBACK ####
 callback_router = CallbackRouter([
-    MenuCallbackHandler(),
+    MenuCallbackHandler(user_service, announcement_service),
     ShareCallbackHandler(announcement_service, city_service),
     FindCallbackHandler(announcement_service),
     MyAnnouncementsCallbackHandler(announcement_service),
@@ -64,11 +64,11 @@ callback_router = CallbackRouter([
     FindMyAnnouncementsCallbackHandler(announcement_service),
 
     DeleteAnnouncementBeforeVoteCallbackHandler(announcement_service),
-    DeleteEventAfterVoteCallbackHandler(announcement_service)
+    DeleteEventAfterVoteCallbackHandler(announcement_service, user_service)
 ])
 
 #### HANDLERS ####
-menu_handler = MenuHandler()
+menu_handler = MenuHandler(user_service, announcement_service)
 
 find_home_city_answer_handler = FindHomeCityAnswerHandler(announcement_service, city_service)
 

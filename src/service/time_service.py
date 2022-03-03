@@ -1,8 +1,8 @@
+import logging
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 from zoneinfo import ZoneInfo
-import logging
 
 UA_TZ = "Europe/Kiev"
 
@@ -42,3 +42,10 @@ def extract_datetime(date_time_str: str) -> Optional[datetime]:
 
 def validate(tm: datetime) -> bool:
     return to_tz(tm, UA_TZ) >= now()
+
+
+def minus(dt: datetime, months: int = 0, weeks: int = 0, days: int = 0, hours: int = 0, minutes: int = 0) -> datetime:
+    if months > 0:
+        days += months * 30
+
+    return dt - timedelta(weeks=weeks, days=days, hours=hours, minutes=minutes)

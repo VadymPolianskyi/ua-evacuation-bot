@@ -7,6 +7,7 @@ from src.handler.menu import MenuGeneral
 from src.service import markup, file_service
 from src.service.announcement import AnnouncementService
 from src.service.markup import EMPTY_VOTE_RESULT
+from src.service.user import UserService
 
 
 class MyAnnouncementsCallbackHandler(TelegramCallbackHandler):
@@ -68,9 +69,9 @@ class DeleteAnnouncementBeforeVoteCallbackHandler(TelegramCallbackHandler):
 class DeleteEventAfterVoteCallbackHandler(TelegramCallbackHandler, MenuGeneral):
     MARKER = DeleteAnnouncementBeforeVoteCallbackHandler.MARKER + markup.VOTE_MARK
 
-    def __init__(self, announcement_service: AnnouncementService):
+    def __init__(self, announcement_service: AnnouncementService, user_service: UserService):
         TelegramCallbackHandler.__init__(self)
-        MenuGeneral.__init__(self)
+        MenuGeneral.__init__(self, user_service, announcement_service)
         self.announcement_service = announcement_service
 
     async def handle_(self, callback: CallbackMeta):

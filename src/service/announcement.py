@@ -36,6 +36,12 @@ class AnnouncementService:
         logging.info(f"Found {ae.to_str()}")
         return self.__to_model(ae)
 
+    @cached(cache=TTLCache(1, 1))
+    def count_all(self, a_type: AnnouncementType = AnnouncementType.share):
+        todays_announcements = self.dao.count(a_type)
+        logging.info(f"Today's announcements - {todays_announcements}")
+        return todays_announcements
+
     def find_all(self):
         result = [self.__to_model(ae) for ae in self.dao.find_all()]
         logging.info(f"Found {len(result)} Announcements")

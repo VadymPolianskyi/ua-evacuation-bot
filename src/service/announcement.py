@@ -60,11 +60,11 @@ class AnnouncementService:
         all_selected = self.dao.find_by_city(city_from_id)
 
         result = [self.__to_model(ae) for ae in all_selected if
-                  self.__is_needed_trip_announcement(ae, a_type, a_service, city_to_id)]
+                  self.__is_needed_announcement(ae, a_type, a_service, city_to_id)]
         logging.info(f"Found {len(result)}: a_type={a_type}, city_from_id={city_from_id}, city_to_id={city_to_id})")
         return result
 
-    def __is_needed_trip_announcement(self, a: AnnouncementEntity, a_type, a_service, city_to_id: int) -> bool:
+    def __is_needed_announcement(self, a: AnnouncementEntity, a_type, a_service, city_to_id: int) -> bool:
         result = a.a_type == a_type
         result = result and a.a_service == a_service
         result = result and (city_to_id is None or a.city_to_id == city_to_id

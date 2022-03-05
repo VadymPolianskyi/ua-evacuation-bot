@@ -29,14 +29,14 @@ class AnnouncementService:
         logging.info(f"Delete AnnouncementEntity(id={announcement_id})")
         return self.dao.delete(announcement_id)
 
-    @cached(cache=TTLCache(5, 5))
+    @cached(cache=TTLCache(maxsize=100, ttl=60))
     def find(self, announcement_id: str) -> Announcement:
         logging.debug(f"Find Announcement(id={announcement_id})")
         ae = self.dao.find(announcement_id)
         logging.info(f"Found {ae.to_str()}")
         return self.__to_model(ae)
 
-    @cached(cache=TTLCache(1, 1))
+    @cached(cache=TTLCache(maxsize=10, ttl=30))
     def count_all(self, a_type: AnnouncementType = AnnouncementType.share):
         todays_announcements = self.dao.count(a_type)
         logging.info(f"Today's announcements - {todays_announcements}")

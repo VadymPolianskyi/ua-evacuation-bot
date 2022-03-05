@@ -13,7 +13,7 @@ class UserService:
     def __init__(self):
         self.dao = UserDao()
 
-    @cached(cache=TTLCache(60, 60))
+    @cached(cache=TTLCache(maxsize=1000, ttl=3600))
     def find_or_create(self, user_id: int) -> Optional[User]:
         logging.debug(f"Get or Create User({user_id})")
         u = self.dao.find(user_id)
@@ -27,7 +27,7 @@ class UserService:
         self.dao.save(u)
         return u
 
-    @cached(cache=TTLCache(1, 1))
+    @cached(cache=TTLCache(maxsize=1, ttl=30))
     def count_last24_users(self):
         dt = time_service.minus(dt=time_service.now(), hours=24)
         todays_users = self.dao.count(dt)

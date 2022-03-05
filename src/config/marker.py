@@ -8,6 +8,7 @@ FIND_CREATE = 'fndc'
 FIND_HOME = 'fndh'
 FIND_HELP = 'fndhl'
 FIND_TRIP = 'fndt'
+BLACK_LIST = 'blklst'
 
 SHARE = 'shr'
 

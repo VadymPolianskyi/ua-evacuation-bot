@@ -16,6 +16,7 @@ FIND_HOME_BUTTON = "Житло 🏠"
 FIND_TRIP_BUTTON = "Транспорт 🚗"
 FIND_HELP_BUTTON = "Допомога 🤲"
 FIND_MY_BUTTON = "Мої заявки 🔔"
+BLACK_LIST_BUTTON = "Чорний список ❗❗❗️"
 
 BACK_BUTTON = '🔙 Назад'
 
@@ -197,6 +198,15 @@ FIND_HELP_RESULT = """
 \n
 """
 
+BLACK_LIST_RESULT = """
+НЕ СПІВПРАЦЮЙТЕ З ЦИМИ ПЕРСОНАМИ ❗️
+Будьте обережні і НІКОЛИ не надсилайте передоплат невідомим людям:
+
+{}
+
+🙏 Ми хочемо застерегти вас від обману. Ці скарги зібрані із різних джерел. Якщо у вас є подібна інформація, будь ласка, напишіть @StillVadim або @polianskyi
+"""
+
 SHARE_HOME_CITY = CITY_GENERAL
 SHARE_HOME_INFO = """
 Житло 🏠
@@ -281,5 +291,7 @@ SHARE_TRIP_ANNOUNCEMENT = "Транспорт 🚗 `{}` - `{}`\nЧас: {}"
 FIND_TRIP_ANNOUNCEMENT = "Транспорт 🚗 `{}` - `{}`"
 SHARE_CREATED_INFO = "\n📆 Створено: {}"
 SHARE_ANNOUNCEMENT_INFO = "\nІнформація:\n{}"
+
+BLOCKED_USER = "Шахрай 👺\nКонтакт: {}\nІнформація:\n{}"
 
 REGULAR = "Регулярний 🕓"

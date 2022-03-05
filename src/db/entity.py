@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 from enum import Enum
 
+from src.config import msg
 from src.config.msg import TRIP_TYPE_NAME, HOME_TYPE_NAME, HELP_TYPE_NAME
 
 
@@ -85,3 +86,20 @@ class AnnouncementEntity:
                                   scheduled=r['scheduled'],
                                   created=r['created']
                                   )
+
+
+class BlockedUser:
+    def __init__(self,
+                 id: int,
+                 contact: str,
+                 info: str):
+        self.id = id
+        self.contact = contact
+        self.info = info
+
+    @classmethod
+    def from_dict(cls, r):
+        return BlockedUser(id=r['id'], contact=r['contact'], info=r['info'])
+
+    def to_str(self):
+        return msg.BLOCKED_USER.format(self.contact, self.info)

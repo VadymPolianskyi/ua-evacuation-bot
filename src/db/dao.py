@@ -5,7 +5,7 @@ from typing import Optional
 import pymysql
 
 from src.config import config
-from src.db.entity import AnnouncementEntity, City, User, AnnouncementType
+from src.db.entity import AnnouncementEntity, City, User, AnnouncementType, BlockedUser
 
 
 def create_connection():
@@ -182,3 +182,15 @@ class UserDao(Dao):
         query = f'SELECT count(*) as res FROM `{self.__table}` {from_date_condition} ;'
         r = self._select_one(query, from_date_parameters)
         return r['res'] if r else None
+
+
+class BlockedUserDao(Dao):
+    def __init__(self):
+        self.__table = config.DB_TABLE_BLOCKED_USER
+
+    def find_all(self) -> list:
+        logging.debug(f"Select all BlockedUsers")
+        query = f'SELECT * FROM `{self.__table}`;'
+        result = self._select_list(query, ())
+        logging.debug(f"Selected {len(result)} BlockedUsers")
+        return [BlockedUser.from_dict(r) for r in result]

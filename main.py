@@ -6,6 +6,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import Message
 
 from src.config import config
+from src.handler.find.black_list import BlackListCallbackHandler
 from src.handler.find.find import FindCallbackHandler
 from src.handler.find.find_create import FindCreateCallbackHandler
 from src.handler.find.find_help import FindHelpCallbackHandler, FindHelpCityAnswerHandler
@@ -59,6 +60,7 @@ callback_router = CallbackRouter([
     FindHomeCallbackHandler(city_service),
     FindTripCallbackHandler(city_service),
     FindHelpCallbackHandler(city_service),
+    BlackListCallbackHandler(user_service),
 
     FindCreateCallbackHandler(announcement_service),
     FindMyAnnouncementsCallbackHandler(announcement_service),

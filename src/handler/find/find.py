@@ -22,6 +22,7 @@ class FindGeneral:
             (msg.FIND_TRIP_BUTTON, marker.FIND_TRIP, '_'),
             (msg.FIND_HELP_BUTTON, marker.FIND_HELP, '_'),
             (msg.FIND_MY_BUTTON, marker.FIND_MY, '_'),
+            (msg.BLACK_LIST_BUTTON, marker.BLACK_LIST, '_'),
             (msg.BACK_BUTTON, marker.MENU, '_')
         ])
 

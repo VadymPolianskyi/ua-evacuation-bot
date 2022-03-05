@@ -37,21 +37,28 @@ class Announcement:
     def to_str(self):
         if self.a_type == AnnouncementType.share:
             if self.a_service == AnnouncementServiceType.home:
-                return f"Житло 🏠 `{self.city_from.name}`\nІнформація: {self.info}"
+                result = msg.HOME_ANNOUNCEMENT.format(self.city_from.name)
             elif self.a_service == AnnouncementServiceType.help:
-                return f"Допомога 🤲 `{self.city_from.name}`\nІнформація: {self.info}"
+                result = msg.HELP_ANNOUNCEMENT.format(self.city_from.name)
             else:
                 time = self.scheduled.strftime("%Y-%m-%d, %H:%M") if self.scheduled else msg.REGULAR
-                return f"Транспорт 🚗 `{self.city_from.name}` - `{self.city_to.name}`\n" \
-                       f"Час: {time}\nІнформація: {self.info}"
+                result = msg.SHARE_TRIP_ANNOUNCEMENT.format(self.city_from.name, self.city_to.name, time)
+
+            if self.created:
+                created_date_str = self.created.strftime("%Y-%m-%d")
+                result += msg.SHARE_CREATED_INFO.format(created_date_str, self.info)
+
+            result += msg.SHARE_ANNOUNCEMENT_INFO.format(self.info)
 
         else:
             if self.a_service == AnnouncementServiceType.home:
-                return f"Житло 🏠 `{self.city_from.name}`"
+                result = msg.HOME_ANNOUNCEMENT.format(self.city_from.name)
             elif self.a_service == AnnouncementServiceType.help:
-                return f"Допомога 🤲 `{self.city_from.name}`"
+                result = msg.HELP_ANNOUNCEMENT.format(self.city_from.name)
             else:
-                return f"Транспорт 🚗 `{self.city_from.name}` - `{self.city_to.name}`"
+                result = msg.FIND_TRIP_ANNOUNCEMENT.format(self.city_from.name, self.city_to.name)
+
+        return result
 
     @classmethod
     def from_entity(cls, ae: AnnouncementEntity, city_from: City, city_to: City = None):

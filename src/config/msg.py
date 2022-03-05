@@ -275,4 +275,11 @@ ERROR_BASIC = "Упс, щось пішло не так, вибачте. Тисн
 
 DELETE_SIGN = '❌'
 
+HOME_ANNOUNCEMENT = "Житло 🏠 `{}`"
+HELP_ANNOUNCEMENT = "Допомога 🤲 `{}`"
+SHARE_TRIP_ANNOUNCEMENT = "Транспорт 🚗 `{}` - `{}`\nЧас: {}"
+FIND_TRIP_ANNOUNCEMENT = "Транспорт 🚗 `{}` - `{}`"
+SHARE_CREATED_INFO = "\n📆 Створено: {}"
+SHARE_ANNOUNCEMENT_INFO = "\nІнформація:\n{}"
+
 REGULAR = "Регулярний 🕓"

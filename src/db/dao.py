@@ -120,7 +120,7 @@ class AnnouncementDao(Dao):
         from_date_condition = "AND created > %s" if from_date else ""
         from_date_parameters: tuple = (a_type, from_date) if from_date else (a_type.name)
 
-        query = f'SELECT count(*) as res FROM `{self.__table}` WHERE a_type=%s {from_date_condition} ;'
+        query = f'SELECT count(*) as res FROM `{self.__table}` WHERE a_type=%s {from_date_condition} AND approve=True;'
         r = self._select_one(query, from_date_parameters)
         return r['res'] if r else None
 

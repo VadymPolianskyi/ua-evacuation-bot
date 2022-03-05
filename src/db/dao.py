@@ -96,14 +96,14 @@ class AnnouncementDao(Dao):
 
     def find_by_user(self, user_id: int, approved=True) -> list:
         logging.debug(f"Select all Announcements for User({user_id})")
-        query = f'SELECT * FROM `{self.__table}` WHERE user_id=%s and approved=%s;'
+        query = f'SELECT * FROM `{self.__table}` WHERE user_id=%s and approved=%s ORDER BY created;'
         result = self._select_list(query, (user_id, approved))
         logging.debug(f"Selected {len(result)} Announcements for User({user_id})")
         return [AnnouncementEntity.from_dict(r) for r in result]
 
     def find_by_city(self, city_from_id: int, approved=True) -> list:
         logging.debug(f"Select all Announcements for city {city_from_id}")
-        query = f'SELECT * FROM `{self.__table}` WHERE city_from_id=%s and approved=%s;'
+        query = f'SELECT * FROM `{self.__table}` WHERE city_from_id=%s and approved=%s ORDER BY created;'
         result = self._select_list(query, (city_from_id, approved))
         logging.debug(f"Selected {len(result)} Announcements in city {city_from_id}")
         return [AnnouncementEntity.from_dict(r) for r in result]

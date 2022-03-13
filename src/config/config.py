@@ -11,7 +11,6 @@ DB_NAME = os.getenv("DB_NAME")
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 
-
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 PARSE_MODE = "Markdown"
 
@@ -21,3 +20,5 @@ DB_TABLE_CITY = os.getenv("DB_TABLE_CITY")
 DB_TABLE_USER = os.getenv("DB_TABLE_USER")
 
 LOG_LEVEL = os.getenv("LOG_LEVEL")
+
+NOTIFICATIONS_INTERVAL = os.getenv("NOTIFICATIONS_INTERVAL")

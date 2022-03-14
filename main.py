@@ -209,6 +209,7 @@ async def on_shutdown(dp):
 
 if __name__ == "__main__":
     logging.info("Lanuch")
+    sch.run()
 
     executor.start_webhook(
         dispatcher=dp,

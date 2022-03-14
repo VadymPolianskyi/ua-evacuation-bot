@@ -3,6 +3,7 @@ import logging
 from typing import Optional
 
 import pymysql
+from pymysql import err
 
 from src.config import config
 from src.db.entity import AnnouncementEntity, City, User, AnnouncementType, BlockedUser
@@ -18,14 +19,17 @@ def create_connection():
         cursorclass=pymysql.cursors.DictCursor)
 
 
-connection = create_connection()
+ADMIN_ID_MAX = 1000
 
 
 class Dao:
+
+    def __init__(self):
+        self.connection = create_connection()
+
     def _select_one(self, query, parameters):
-        global connection
         try:
-            with connection.cursor() as cursor:
+            with self.connection.cursor() as cursor:
                 sql_query = query.replace("'", "")
                 logging.debug(f"Execute 'select_one' query: {sql_query}")
                 logging.debug(f'Parameters: {parameters}')
@@ -34,13 +38,13 @@ class Dao:
                 return cursor.fetchone()
         except Exception as e:
             logging.error("Exception in db:", e)
-            connection = create_connection()
+            self.connection = create_connection()
             logging.info("Recreated connection")
+            return self._select_one(query, parameters)
 
     def _select_list(self, query, parameters) -> list:
-        global connection
         try:
-            with connection.cursor() as cursor:
+            with self.connection.cursor() as cursor:
                 sql_query = query.replace("'", "")
                 logging.debug(f"Execute 'select_list' query: {sql_query}")
                 logging.debug(f'Parameters: {parameters}')
@@ -49,27 +53,36 @@ class Dao:
                 return cursor.fetchall()
         except Exception as e:
             logging.error("Exception in db:", e)
-            connection = create_connection()
+            self.connection = create_connection()
             logging.info("Recreated connection")
+            return self._select_list(query, parameters)
 
     def _execute(self, query, parameters):
-        global connection
         try:
-            with connection.cursor() as cursor:
+            with self.connection.cursor() as cursor:
                 sql_query = query.replace("'", "")
                 logging.debug(f"Execute query: {sql_query}")
                 logging.debug(f'Parameters: {parameters}')
                 cursor.execute(sql_query, parameters)
                 logging.debug("Successfully executed")
-            connection.commit()
+            self.connection.commit()
         except Exception as e:
             logging.error("Exception in db:", e)
-            connection = create_connection()
+            self.connection = create_connection()
             logging.info("Recreated connection")
+            return self._execute(query, parameters)
+
+    def close(self):
+        logging.info("Closing connection")
+        try:
+            self.connection.close()
+        except err.Error as e:
+            logging.info(f"Exception during closing connection", e)
 
 
 class AnnouncementDao(Dao):
     def __init__(self):
+        super().__init__()
         self.__table = config.DB_TABLE_ANNOUNCEMENT
 
     def save(self, ann: AnnouncementEntity, approved=True):
@@ -124,9 +137,17 @@ class AnnouncementDao(Dao):
         r = self._select_one(query, from_date_parameters)
         return r['res'] if r else None
 
+    def find_after(self, a_type: AnnouncementType, after_timestamp: datetime, approved=True):
+        logging.debug(f"Select all Announcements({a_type.name}) after_timestamp {after_timestamp}")
+        query = f'SELECT * FROM `{self.__table}` WHERE a_type=%s AND created >= %s AND user_id<=%s AND approved=%s ORDER BY created;'
+        result = self._select_list(query, (a_type.name, after_timestamp, ADMIN_ID_MAX, approved))
+        logging.debug(f"Selected {len(result)} Announcements({a_type.name}) after_timestamp {after_timestamp}")
+        return [AnnouncementEntity.from_dict(r) for r in result]
+
 
 class CityDao(Dao):
     def __init__(self):
+        super().__init__()
         self.__table = config.DB_TABLE_CITY
 
     def save(self, city: City):
@@ -159,6 +180,7 @@ class CityDao(Dao):
 
 class UserDao(Dao):
     def __init__(self):
+        super().__init__()
         self.__table = config.DB_TABLE_USER
 
     def save(self, user: User):
@@ -186,6 +208,7 @@ class UserDao(Dao):
 
 class BlockedUserDao(Dao):
     def __init__(self):
+        super().__init__()
         self.__table = config.DB_TABLE_BLOCKED_USER
 
     def find_all(self) -> list:

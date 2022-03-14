@@ -19,6 +19,8 @@ class AnnouncementService:
                a_service: AnnouncementServiceType, city_from_id: int,
                city_to_id: int = None, info: str = None, scheduled: datetime = None) -> Announcement:
         logging.debug("Create announcement")
+        info = info.replace(";", " ") if info else None
+
         ae = AnnouncementEntity(user_id=user_id, a_type=a_type, a_service=a_service,
                                 city_from_id=city_from_id, city_to_id=city_to_id, info=info, scheduled=scheduled)
         self.dao.save(ae)
@@ -77,3 +79,13 @@ class AnnouncementService:
 
     def __to_model(self, ae: AnnouncementEntity) -> Announcement:
         return Announcement.from_entity(ae, self.cities.find(ae.city_from_id), self.cities.find(ae.city_to_id))
+
+    def find_all_after(self, a_type: AnnouncementType, from_timestamp: datetime):
+        logging.debug(f"Find Announcements(a_type={a_type.name}, from_timestamp={from_timestamp})")
+        result = [self.__to_model(ae) for ae in self.dao.find_after(a_type, from_timestamp)]
+        logging.info(f"Found {len(result)}: a_type={a_type.name}, from_timestamp={from_timestamp})")
+        return result
+
+    def close(self):
+        self.dao.close()
+        self.cities.close()

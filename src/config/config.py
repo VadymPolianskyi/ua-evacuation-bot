@@ -3,22 +3,22 @@ import os
 SERVER_HOST = os.environ.get('HOST', "0.0.0.0")
 SERVER_PORT = int(os.environ.get('PORT', 5000))
 
-BOT_API_TOKEN = os.getenv("BOT_API_TOKEN")
+BOT_API_TOKEN = "5067855111:AAHmQTKVHPqeA8ARM4jJuLopaG_OG2L5LPc"
 
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = int(os.getenv("DB_PORT"))
-DB_NAME = os.getenv("DB_NAME")
-DB_USERNAME = os.getenv("DB_USERNAME")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = 'db-mysql-alesha-amst-do-user-9731128-0.b.db.ondigitalocean.com'
+DB_PORT = 25060
+DB_NAME = 'alesha'
+DB_USERNAME = 'doadmin'
+DB_PASSWORD = 'ons4f71is9n17hef'
 
-WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+WEBHOOK_URL = 'https://ua-evacuation-bot.herokuapp.com/'
 PARSE_MODE = "Markdown"
 
-DB_TABLE_ANNOUNCEMENT = os.getenv("DB_TABLE_ANNOUNCEMENT")
-DB_TABLE_BLOCKED_USER = os.getenv("DB_TABLE_BLOCKED_USER")
-DB_TABLE_CITY = os.getenv("DB_TABLE_CITY")
-DB_TABLE_USER = os.getenv("DB_TABLE_USER")
+DB_TABLE_ANNOUNCEMENT = 'evacuation_announcement_test'
+DB_TABLE_BLOCKED_USER = 'evacuation_black_list'
+DB_TABLE_CITY = 'evacuation_city'
+DB_TABLE_USER = 'evacuation_user'
 
-LOG_LEVEL = os.getenv("LOG_LEVEL")
+LOG_LEVEL = 'DEBUG'
 
-NOTIFICATIONS_INTERVAL = os.getenv("NOTIFICATIONS_INTERVAL")
+NOTIFICATIONS_INTERVAL = 30

@@ -5,10 +5,15 @@ from typing import Optional
 from zoneinfo import ZoneInfo
 
 UA_TZ = "Europe/Kiev"
+UTC_TZ = "UTC"
 
 
 def now() -> datetime:
     return _now(UA_TZ)
+
+
+def now_utc() -> datetime:
+    return _now(UTC_TZ)
 
 
 def _now(tz: str = None) -> datetime:
@@ -49,3 +54,7 @@ def minus(dt: datetime, months: int = 0, weeks: int = 0, days: int = 0, hours: i
         days += months * 30
 
     return dt - timedelta(weeks=weeks, days=days, hours=hours, minutes=minutes)
+
+
+def to_minutes(seconds: int):
+    return seconds * 60

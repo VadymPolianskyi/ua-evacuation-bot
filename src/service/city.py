@@ -43,3 +43,6 @@ class CityService:
     def find_by_name(self, city_name: str) -> Optional[City]:
         logging.info(f"Find by name City({city_name})")
         return self.dao.find_by_name(city_name)
+
+    def close(self):
+        self.dao.close()

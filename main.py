@@ -31,6 +31,7 @@ from src.handler.state import ShareHomeState, ShareTripState, FindHomeState, Fin
     FindHelpState
 from src.service.announcement import AnnouncementService
 from src.service.city import CityService
+from src.service.scheduler import Scheduler
 from src.service.user import UserService
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.getLevelName(config.LOG_LEVEL))
@@ -43,6 +44,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 announcement_service = AnnouncementService()
 city_service = CityService()
 user_service = UserService()
+sch = Scheduler()
 
 #### CALLBACK ####
 callback_router = CallbackRouter([
@@ -200,6 +202,7 @@ async def on_shutdown(dp):
 
     await dp.storage.close()
     await dp.storage.wait_closed()
+    announcement_service.close()
 
     logging.info('Bye!')
 

@@ -73,6 +73,18 @@ INFO = """
 Благодійність 🕊
 - [Повернись живим](https://savelife.in.ua/en/donate/)
 - [Національний банк](https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi)
+- [markobook](https://markobook.com/)
+- [ФОНД Діани Макарової](https://www.facebook.com/fondDM)
+- [Na Front](https://m.facebook.com/NaFront/)
+- [ФРАЙКОР](https://t.me/freikorps_org/3457)
+- [hospitallers](https://www.instagram.com/p/CZwQHc5tLSY/?utm_medium=copy_link)
+- [Roman Donik](https://t.me/romandonik/2411)
+- [Міністерство інформаційної політики України](https://mkip.gov.ua/content/volonterski--organizacii.html?PrintVersion)
+
+
+Перетин кордону
+- [Актуальні дані](https://evacuation-ukraine.notion.site/evacuation-ukraine/ac26344a24bc47729fceafc6642e04cb)
+- [Моніторинг черг на кордоні](https://docs.google.com/spreadsheets/d/e/2PACX-1vTmKNAxZn2cPpBqPHnRx9Hc_GPzfi7U92h05hkNuES6pA8l7IcbfdRELMkTBWGcBFoRkUdwlnfX889X/pubhtml?gid=0&single=true&fbclid=IwAR1qTqmfhHYDYFB_N14kCXweiK3BWVGzSfIYlpnD1UhYU33c-Tm0LJQYSuw&utm_source=newsletter&utm_medium=email&utm_campaign=vazhliva_informaciya_shchodo_peretinu_kordoniv&utm_term=2022-03-02)
 
 Телеграм Чати
 - @ukr\_helps
@@ -112,17 +124,27 @@ INFO = """
 - @insiderUKR
 - @Tsaplienko
 
+Ліки
+- [Tabletki.ua](https://tabletki.ua/ru/)
+- [Список аптек, де за умов війни можна отримати інсулін](https://bit.ly/apteky_insul)
+
+Робота
+- @jobforukrainians
+
 Бiльше
 - @itarmyofukraine2022
 - [Карта, де люди та організації можуть допомогти якоюсь послугою біженцям з України](https://mapahelp.me/)
 - [Бот, який допоможе в екстреній ситуації](https://t.me/DovidkaInfo_bot)
 - [Пам'ятка біженцям](https://docs.google.com/document/d/1Te15giZrNWc55DUIsT6JCjLvlSkKlz9shHt8_TyhiQY/edit)
 - [Молдова](https://dopomoga.life/?fbclid=IwAR27iC3_NqX28sSu92XJ2J1NAgGRUXNc14WxoC1-pwk-Wkf1LltV4beiPZw)
+- [overhelp.ua](https://www.instagram.com/overhelp.ua/)
 
 Ця сторінка регулярно поповнюватиметься корисною інформацією.
 Щодо будь-яких питань та пропозицій пишіть @polianskyi
 
 💪 Якщо бажаєте приєднатися до нашої команди, пишіть @polianskyi
+
+Велике прохання поширити даного бота серед близьких та знайомих!
 """
 
 # MESSAGE

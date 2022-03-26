@@ -46,5 +46,8 @@ class Notificator:
         bot = Bot(token=config.BOT_API_TOKEN, parse_mode=config.PARSE_MODE)
 
         for user_id in users:
-            logging.info(f"Notify User({user_id}) about Announcement({a_str})")
-            self.el.run_until_complete(bot.send_message(user_id, msg.FOUND.format(a_str)))
+            try:
+                logging.info(f"Notify User({user_id}) about Announcement({a_str})")
+                self.el.run_until_complete(bot.send_message(user_id, msg.FOUND.format(a_str)))
+            except Exception as e:
+                logging.error("Failed notification User({user_id}) about Announcement({a_str})", e)

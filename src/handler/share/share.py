@@ -36,7 +36,10 @@ class ShareGeneral:
 
         a_str = a.to_str()
         for user in users:
-            await message.bot.send_message(user, msg.FOUND.format(a_str))
+            try:
+                await message.bot.send_message(user, msg.FOUND.format(a_str))
+            except Exception as e:
+                logging.error(f"Failed notification User({user}) about Announcement({a_str})", e)
 
 
 class ShareCallbackHandler(TelegramCallbackHandler, ShareGeneral):

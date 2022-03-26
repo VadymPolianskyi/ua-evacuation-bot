@@ -41,4 +41,5 @@ def backup_city(header: list, filename: str):
     logging.info("Finished CITY backup")
 
 
-backup_city(c_header, 'evacuation_city.csv')
+# backup_city(c_header, 'evacuation_city.csv')
+backup_announcements(a_header, 'evacuation_announcements.csv')

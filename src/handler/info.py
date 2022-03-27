@@ -1,7 +1,7 @@
 import logging
 
 from src.config import marker, msg
-from src.handler.general import TelegramCallbackHandler, CallbackMeta
+from src.handler import TelegramCallbackHandler, CallbackMeta
 from src.service import markup
 
 

@@ -8,7 +8,7 @@ from src.config import marker, msg
 from src.config.limits import INFO_SYMBOLS_LIMIT
 from src.config.msg import SHARE_INFO_WARNING
 from src.db.entity import AnnouncementType, AnnouncementServiceType, City
-from src.handler.general import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
+from src.handler import TelegramCallbackHandler, CallbackMeta, TelegramMessageHandler, MessageMeta
 from src.handler.share.share import ShareGeneral
 from src.handler.state import ShareTripState
 from src.service import time_service, markup

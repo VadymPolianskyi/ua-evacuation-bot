@@ -2,7 +2,7 @@ import logging
 
 from src.config import msg, marker, limits
 from src.db.entity import AnnouncementType, AnnouncementServiceType
-from src.handler.general import TelegramCallbackHandler, CallbackMeta
+from src.handler import TelegramCallbackHandler, CallbackMeta
 from src.handler.menu import MenuGeneral
 from src.service import markup, file_service
 from src.service.announcement import AnnouncementService

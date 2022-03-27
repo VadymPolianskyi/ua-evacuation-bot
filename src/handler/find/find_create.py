@@ -6,7 +6,7 @@ from aiogram.types import ReplyKeyboardRemove
 from src.config import msg, marker
 from src.db.entity import AnnouncementType, AnnouncementServiceType, City
 from src.handler.find.find import FindGeneral
-from src.handler.general import TelegramCallbackHandler, CallbackMeta
+from src.handler import TelegramCallbackHandler, CallbackMeta
 from src.service.announcement import AnnouncementService
 
 

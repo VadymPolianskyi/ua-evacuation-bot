@@ -2,7 +2,7 @@ from aiogram.types import Message
 
 from src.config import marker, msg
 from src.db.entity import AnnouncementType
-from src.handler.general import TelegramCallbackHandler, CallbackMeta
+from src.handler import TelegramCallbackHandler, CallbackMeta
 from src.model import Announcement
 from src.service import markup
 from src.service.announcement import AnnouncementService

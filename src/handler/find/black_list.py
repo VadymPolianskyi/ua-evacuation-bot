@@ -30,7 +30,7 @@ class BlackListCallbackHandler(TelegramCallbackHandler):
             logging.info(f"Response more messages becaulse of text length = {len(final_message)}")
             separated = separate(final_message)
             for m in separated:
-                if separated.index(m) == len(separated) - 1:
+                if separated.index(m) == len(separated) - 1 and len(m) > 0:
                     await callback.original.message.answer(m, reply_markup=reply_markup, disable_web_page_preview=True)
                 else:
                     await callback.original.message.answer(m, disable_web_page_preview=True)

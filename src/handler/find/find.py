@@ -48,7 +48,7 @@ class FindGeneral:
             logging.info(f"Response more messages becaulse of text length = {len(final_message)}")
             separated = separate(final_message)
             for m in separated:
-                if separated.index(m) == len(separated) - 1:
+                if separated.index(m) == len(separated) - 1 and len(m) > 0:
                     await message.answer(m, reply_markup=menu_keyboard, disable_web_page_preview=True)
                 else:
                     await message.answer(m, disable_web_page_preview=True)

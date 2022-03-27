@@ -49,9 +49,9 @@ class FindGeneral:
             separated = separate(final_message)
             for m in separated:
                 if separated.index(m) == len(separated) - 1:
+                    m = m if len(m) > 0 else msg.ADDITIONAL
                     await message.answer(m, reply_markup=menu_keyboard, disable_web_page_preview=True)
                 else:
-                    m = m if len(m) > 0 else msg.ADDITIONAL
                     await message.answer(m, disable_web_page_preview=True)
         else:
             await message.answer(final_message, reply_markup=menu_keyboard, disable_web_page_preview=True)

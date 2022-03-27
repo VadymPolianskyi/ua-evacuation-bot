@@ -117,4 +117,5 @@ class BlockedUser:
         return BlockedUser(id=r['id'], contact=r['contact'], info=r['info'])
 
     def to_str(self):
-        return msg.BLOCKED_USER.format(self.contact, self.info)
+        info = "\n" + self.info if self.info else ""
+        return msg.BLOCKED_USER.format(self.contact + info)

@@ -315,6 +315,6 @@ SHARE_CREATED_INFO = "\n📆 Створено: {}"
 SHARE_ANNOUNCEMENT_VERIFIED = "\n✅ Перевірено: {}"
 SHARE_ANNOUNCEMENT_INFO = "\n{}"
 
-BLOCKED_USER = "Шахрай 👺\nКонтакт: {}\nІнформація:\n{}"
+BLOCKED_USER = "Шахрай 👺\n{} - {}"
 
 REGULAR = "Регулярний 🕓"

@@ -14,6 +14,8 @@ class Announcement:
 
                  id: str = None,
                  info: str = None,
+                 verified: bool = None,
+                 verified_at: datetime = None,
                  scheduled: datetime = None,
                  created: datetime = None,
                  city_to: City = None
@@ -25,6 +27,8 @@ class Announcement:
         self.city_from: City = city_from
         self.city_to: City = city_to
         self.info: str = info
+        self.verified: bool = verified
+        self.verified_at: datetime = verified_at
         self.scheduled: datetime = scheduled
         self.created: datetime = created
 
@@ -45,8 +49,10 @@ class Announcement:
                 result = msg.SHARE_TRIP_ANNOUNCEMENT.format(self.city_from.name, self.city_to.name, time)
 
             if self.created:
-                created_date_str = self.created.strftime("%Y-%m-%d")
-                result += msg.SHARE_CREATED_INFO.format(created_date_str, self.info)
+                result += msg.SHARE_CREATED_INFO.format(self.created.strftime("%Y-%m-%d"), self.info)
+
+            if self.verified:
+                result += msg.SHARE_ANNOUNCEMENT_VERIFIED.format(self.verified_at.strftime("%Y-%m-%d"))
 
             result += msg.SHARE_ANNOUNCEMENT_INFO.format(self.info)
 
@@ -69,6 +75,8 @@ class Announcement:
                             city_from=city_from,
                             city_to=city_to,
                             info=ae.info,
+                            verified=ae.verified,
+                            verified_at=ae.verified_at,
                             scheduled=ae.scheduled,
                             created=ae.created
                             )

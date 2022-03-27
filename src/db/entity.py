@@ -5,6 +5,8 @@ from enum import Enum
 from src.config import msg
 from src.config.msg import TRIP_TYPE_NAME, HOME_TYPE_NAME, HELP_TYPE_NAME
 
+VERIFIED_STATUS = 'VERIFIED'
+
 
 class AnnouncementType(Enum):
     find = 1
@@ -46,6 +48,8 @@ class AnnouncementEntity:
                  city_from_id: int,
 
                  info: str = None,
+                 verified: bool = False,
+                 verified_at: datetime = None,
                  id: str = None,
                  scheduled: datetime = None,
                  created: datetime = None,
@@ -58,13 +62,15 @@ class AnnouncementEntity:
         self.city_from_id: int = city_from_id
         self.city_to_id: int = city_to_id
         self.info: str = info
+        self.verified: bool = verified
+        self.verified_at: datetime = verified_at
         self.scheduled: datetime = scheduled
         self.created: datetime = created
 
     def to_str(self):
         return f"AnnouncementEntity(user_id={self.user_id}, a_type={self.a_type.name}, " \
                f"a_service={self.a_service.name}, city_from_id={self.city_from_id}, city_to_id={self.city_to_id}, " \
-               f"info={self.info}, scheduled={self.scheduled})"
+               f"info={self.info}, verified={self.verified}, verified_at={self.verified_at}, scheduled={self.scheduled})"
 
     @classmethod
     def from_dict(cls, r):
@@ -76,6 +82,13 @@ class AnnouncementEntity:
         else:
             a_service = AnnouncementServiceType.help
 
+        if 'status' in r.keys() and r['status'] == VERIFIED_STATUS:
+            verified = True
+            verified_at = r['updated_at']
+        else:
+            verified = False
+            verified_at = None
+
         return AnnouncementEntity(id=r['id'],
                                   user_id=r['user_id'],
                                   a_type=a_type,
@@ -83,6 +96,8 @@ class AnnouncementEntity:
                                   city_from_id=r['city_from_id'],
                                   city_to_id=r['city_to_id'],
                                   info=r['info'],
+                                  verified=verified,
+                                  verified_at=verified_at,
                                   scheduled=r['scheduled'],
                                   created=r['created']
                                   )

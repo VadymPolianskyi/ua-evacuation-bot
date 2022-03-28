@@ -49,7 +49,7 @@ class FindGeneral:
             separated = separate(final_message)
             for m in separated:
                 if separated.index(m) == len(separated) - 1:
-                    m = m if m != "" else msg.ADDITIONAL
+                    m = m if len(m.strip()) > 0 else msg.ADDITIONAL
                     logging.info(f"Send with buttons: {m}")
                     await message.answer(m, reply_markup=menu_keyboard, disable_web_page_preview=True)
                 else:

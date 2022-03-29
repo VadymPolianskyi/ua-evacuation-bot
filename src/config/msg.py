@@ -135,7 +135,7 @@ INFO = """
 
 Бiльше
 - @itarmyofukraine2022
-- @CyberArm_bot
+- @CyberArm\_bot
 - [Бот, який допоможе в екстреній ситуації](https://t.me/DovidkaInfo_bot)
 - [Безкоштовна правова допомога українцям у всьому світі](https://t.me/artius_law_bot)
 - [Пам'ятка біженцям](https://docs.google.com/document/d/1Te15giZrNWc55DUIsT6JCjLvlSkKlz9shHt8_TyhiQY/edit)

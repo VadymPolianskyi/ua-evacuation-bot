@@ -127,7 +127,7 @@ INFO = """
 - [Tabletki.ua](https://tabletki.ua/ru/)
 - [Список аптек, де за умов війни можна отримати інсулін](https://bit.ly/apteky_insul)
 - [АЗС, ліки, укриття, пункти допомоги по Україні](https://opir.org)
-- @MedicalForUA_bot
+- @MedicalForUA\_bot
 
 Робота
 - @workadojobs

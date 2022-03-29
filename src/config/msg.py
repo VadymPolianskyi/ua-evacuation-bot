@@ -37,19 +37,28 @@ MENU = """
 INFO = """
 ❗Корисні ресурси:
 
+- [Моніторинг тривог по Україні](https://war.ukrzen.in.ua/alerts/)
+
 - [Агрегована iнформацiя](https://viyna.net/)
 - [Агрегована iнформацiя 2](https://docs.google.com/document/d/1ZCxrK4520gSGiGy4Cvqbzzn6TkB02j85XlGc5J5cFrQ/mobilebasic?fbclid=IwAR2H3kUQvBVGuXwi1EimKQu3zfu4s8mO8smhU5PozgKrtG-GC48bjCtgYCc#h.x9logjleyhsb)
+- [Карта допомоги](https://mapahelp.me/)
+- [Карта допомоги з житлом](https://icanhelp.host/)
 
 Житло 🏠
 - [Прихисток](https://prykhystok.in.ua/)
-- [Молдова](https://www.facebook.com/groups/347615063908402/?ref=share)
-- [Польща](https://www.gov.pl/web/udsc/ukraina---ua)
-- [Житло  на Західній для біженців](https://t.me/+mteSsw5p5K9jOWEy)
-- [Центри обігріву на Закарпатті](https://lb.ua/society/2022/02/26/507050_zakarpatti_vimushenih.html)
-- [Волонтери Польща - машини, житло](https://www.facebook.com/groups/683793819641997/?ref=share)
+- [Ukraine take shelter](https://www.ukrainetakeshelter.com/)
+- [Житло по всьому світу](https://www.host4ukraine.com/)
+- [Житло для Українців](https://www.shelter4ua.com/ua#)
 - [Форма для заповнення](https://docs.google.com/forms/d/e/1FAIpQLSerQV8PufaIagMPTZ36mlNeVGOzElh_G-sXOAmNvZQUUXS9GQ/viewform)
 - @winwin\_realty
-- @help\_find\_house
+- [Безкоштовне проживання в 393 готелях у 42 країнах світу для громадян України](https://lowcost.ua/hospitalitysupport-ua-free/)
+
+- [Житло  на Західній для біженців](https://t.me/+mteSsw5p5K9jOWEy)
+- [Молдова](https://www.facebook.com/groups/347615063908402/?ref=share)
+- [Польща](https://www.gov.pl/web/udsc/ukraina---ua)
+- [Волонтери Польща - машини, житло](https://www.facebook.com/groups/683793819641997/?ref=share)
+- [Житло в Німеччині](https://warmes-bett.de/ueber-uns/)
+- [Допомога біженцям у Львові](https://helpcenter.in.ua/)
 
 
 Транспорт/Виїзд 🚗
@@ -57,22 +66,26 @@ INFO = """
 - [В'їзд до Польщі з України. Актуальна інформація](https://in-poland.com/vezd-v-polshu-iz-ukrainy-aktualnaya-informatsiya/)
 - [Список водіїв](https://docs.google.com/spreadsheets/d/13lT4ja1qVoWKMAVaxApLq_wpx7YYHKLdzJbPYhA46GA/htmlview?fbclid=IwAR33tCPlOZh93OlBuvks8nu6nnKH70DNmGzBUar6r5Udx08mjkuI_Eq2H04%23gid%3D0#)
 - [Coordination Ukraine Road](https://t.me/+g_QZESG1yuMwZThi)
-- [Drivers UA border](https://t.me/+CB4Y-s4O8kM4Yzcy)
-- [Документ, що постійно оновлюється за станом черг на кордоні](https://docs.google.com/spreadsheets/d/e/2PACX-1vTmKNAxZn2cPpBqPHnRx9Hc_GPzfi7U92h05hkNuES6pA8l7IcbfdRELMkTBWGcBFoRkUdwlnfX889X/pubhtml?gid=0&single=true&fbclid=IwAR1qTqmfhHYDYFB_N14kCXweiK3BWVGzSfIYlpnD1UhYU33c-Tm0LJQYSuw)
-- [Перетин кордону](https://ukraineisforever.notion.site/56e00112898a418a98b1491725aef0d4)
 - [Інформація для тих вимушений поїхати з України](https://helpukriane.notion.site/helpukriane/34c245d9de8f4438b0c7e92bf1267080)
-- @ukraineborder
-- @vodiivolonterylviv
+- [Українські волонтери, які евакують людей з Харкова](https://linktr.ee/rescue.now)
 - @pomoc2022
 - @UkrzalInfo
 - @perevezite
 
-
 Пам'ятайте, ПОЇЗДИ зараз функціонують БЕЗКОШТОВНО! 🚊
+
+Перетин кордону
+- [Актуальні дані](https://evacuation-ukraine.notion.site/evacuation-ukraine/ac26344a24bc47729fceafc6642e04cb)
+- [Моніторинг черг на кордоні](https://docs.google.com/spreadsheets/d/e/2PACX-1vTmKNAxZn2cPpBqPHnRx9Hc_GPzfi7U92h05hkNuES6pA8l7IcbfdRELMkTBWGcBFoRkUdwlnfX889X/pubhtml?gid=0&single=true&fbclid=IwAR1qTqmfhHYDYFB_N14kCXweiK3BWVGzSfIYlpnD1UhYU33c-Tm0LJQYSuw)
+- [Перетин кордону](https://ukraineisforever.notion.site/56e00112898a418a98b1491725aef0d4)
+- [Водії на кордоні](https://t.me/+CB4Y-s4O8kM4Yzcy)
+- [Кордони України Інфо](https://t.me/ukraineborders_bot)
+
 
 Благодійність 🕊
 - [Повернись живим](https://savelife.in.ua/en/donate/)
 - [Національний банк](https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi)
+- [Future for Ukraine](https://ffu.foundation/)
 - [markobook](https://markobook.com/)
 - [ФОНД Діани Макарової](https://www.facebook.com/fondDM)
 - [Na Front](https://m.facebook.com/NaFront/)
@@ -82,10 +95,6 @@ INFO = """
 - [Міністерство інформаційної політики України](https://mkip.gov.ua/content/volonterski--organizacii.html?PrintVersion)
 
 
-Перетин кордону
-- [Актуальні дані](https://evacuation-ukraine.notion.site/evacuation-ukraine/ac26344a24bc47729fceafc6642e04cb)
-- [Моніторинг черг на кордоні](https://docs.google.com/spreadsheets/d/e/2PACX-1vTmKNAxZn2cPpBqPHnRx9Hc_GPzfi7U92h05hkNuES6pA8l7IcbfdRELMkTBWGcBFoRkUdwlnfX889X/pubhtml?gid=0&single=true&fbclid=IwAR1qTqmfhHYDYFB_N14kCXweiK3BWVGzSfIYlpnD1UhYU33c-Tm0LJQYSuw&utm_source=newsletter&utm_medium=email&utm_campaign=vazhliva_informaciya_shchodo_peretinu_kordoniv&utm_term=2022-03-02)
-
 Телеграм Чати
 - @ukr\_helps
 - @moldovaukraina
@@ -93,19 +102,9 @@ INFO = """
 
 Евакуація
 - [Луганська область](https://t.me/luhanskevaquation)
-- [Iваново-Франківськ](https://t.me/+nzeP_stFB3I1MjU0)
-- [Запоріжжя](https://t.me/+ynRJn88RxgswYmU0)
-- [Ужгород](https://t.me/+5WlQQHIKJ4NjMGNk) 
-- [Житомир](https://t.me/+QD2EEIJqf_xhYjQ8)
-- [Дніпро](https://t.me/+LpQlRQvCas1jNmI0)
-- [Павлоград](https://t.me/pavlogradevak) 
-- [Луцьк](https://t.me/+R49w2c4seXw5MzJk) 
-- [Вінниця](https://t.me/+LeEGgnB7RwcxYWI0) 
-- [Бердичів](https://t.me/+g1vCeKfEve5lNTM6)
 - [Черкаси](https://t.me/EvacuationCherkasy) 
 - [Чернівці](https://t.me/evacuationChernovtsy) 
 - [Чернiгiв](https://t.me/+i1Np0FJLhs4zMzli) 
-- [Донецька область (Покровський район)](https://t.me/pokrovsk_don)
 - [Київ (Перевезення Київ - Польша)](https://t.me/+68JG-qKNvm9kNjZi)
 - [Хмельницький](https://t.me/+qORus3EoBnEzZmNk) 
 - [Рівно](https://t.me/+hwq625pYpfUzOWI8) 
@@ -120,22 +119,27 @@ INFO = """
 - [Кривий Ріг](https://t.me/+SguKJv2dQGRkM2Zk)
 
 Телеграм Канали з Новинами
-- @korotkoiyasn
+- @lachentyt
 - @insiderUKR
 - @Tsaplienko
 
 Ліки
 - [Tabletki.ua](https://tabletki.ua/ru/)
 - [Список аптек, де за умов війни можна отримати інсулін](https://bit.ly/apteky_insul)
+- [АЗС, ліки, укриття, пункти допомоги по Україні](https://opir.org)
+- @MedicalForUA_bot
 
 Робота
+- @workadojobs
 - @jobforukrainians
 
 Бiльше
 - @itarmyofukraine2022
-- [Карта, де люди та організації можуть допомогти якоюсь послугою біженцям з України](https://mapahelp.me/)
+- @CyberArm_bot
 - [Бот, який допоможе в екстреній ситуації](https://t.me/DovidkaInfo_bot)
+- [Безкоштовна правова допомога українцям у всьому світі](https://t.me/artius_law_bot)
 - [Пам'ятка біженцям](https://docs.google.com/document/d/1Te15giZrNWc55DUIsT6JCjLvlSkKlz9shHt8_TyhiQY/edit)
+- [Центри обігріву на Закарпатті](https://lb.ua/society/2022/02/26/507050_zakarpatti_vimushenih.html)
 - [Молдова](https://dopomoga.life/?fbclid=IwAR27iC3_NqX28sSu92XJ2J1NAgGRUXNc14WxoC1-pwk-Wkf1LltV4beiPZw)
 - [overhelp.ua](https://www.instagram.com/overhelp.ua/)
 
